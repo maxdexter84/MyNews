@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="medium_space_16dp">16dp</dimen>
+    <dimen name="min_elevation_2dp">2dp</dimen>
+</resources>

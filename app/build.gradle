@@ -14,6 +14,8 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
+
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -23,6 +25,13 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    buildFeatures {
+        dataBinding true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -72,7 +81,9 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
 
 //    После добавления FireStore в проект столкнемся с превышением лимита количества методов для .dex-файлов. Чтобы решить эту проблему, необходимо добавить в проект поддержку MultiDex. Для этого добавим еще одну зависимость в build.gradle уровня модуля:
-    implementation 'com.android.support:multidex:1.0.3'
+   // implementation 'com.android.support:multidex:1.0.3'
+    def multidex_version = "2.0.1"
+    implementation "androidx.multidex:multidex:$multidex_version"
 
 
     //Navigation
