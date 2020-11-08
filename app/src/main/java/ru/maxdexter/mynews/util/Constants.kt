@@ -1,0 +1,8 @@
+package ru.maxdexter.mynews.util
+
+class Constants{
+    companion object{
+        const val API_KEY = "a1a721d908b2412eb541dc137936049e"
+        const val BASE_URL = "https://newsapi.org"
+    }
+}
