@@ -1,4 +1,4 @@
-package ru.maxdexter.mynews.data
+package ru.maxdexter.mynews.models
 
 data class Source(
     val id: Any,

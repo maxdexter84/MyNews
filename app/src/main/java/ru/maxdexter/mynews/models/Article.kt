@@ -1,4 +1,4 @@
-package ru.maxdexter.mynews.data
+package ru.maxdexter.mynews.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

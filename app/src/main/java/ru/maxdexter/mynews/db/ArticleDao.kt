@@ -2,7 +2,7 @@ package ru.maxdexter.mynews.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import ru.maxdexter.mynews.data.Article
+import ru.maxdexter.mynews.models.Article
 
 @Dao
 interface ArticleDao {
