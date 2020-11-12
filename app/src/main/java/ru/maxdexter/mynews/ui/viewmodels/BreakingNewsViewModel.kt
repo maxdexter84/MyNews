@@ -16,7 +16,6 @@ class BreakingNewsViewModel (val repository: NewsRepository): ViewModel() {
     private val _breakingNews = MutableLiveData<Resource<NewsResponse>>()
             val breakingNews: LiveData<Resource<NewsResponse>>
             get() = _breakingNews
-
     var breakingNewsPage = 1
 
     init {

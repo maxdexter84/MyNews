@@ -29,8 +29,13 @@ class BreakingNewsFragment: Fragment(R.layout.fragment_breaking_news) {
 
 
         setRecyclerView()
-        viewModel.breakingNews.observe(viewLifecycleOwner, {response ->
-            when(response) {
+        initObserveData(view)
+
+    }
+
+    private fun initObserveData(view: View) {
+        viewModel.breakingNews.observe(viewLifecycleOwner, { response ->
+            when (response) {
                 is Resource.Success -> {
                     hideProgressBar()
                     newsAdapter.differ.submitList(response.data?.articles)
@@ -44,7 +49,6 @@ class BreakingNewsFragment: Fragment(R.layout.fragment_breaking_news) {
                 is Resource.Loading -> showProgressBar()
             }
         })
-
     }
 
     private fun hideProgressBar() {
