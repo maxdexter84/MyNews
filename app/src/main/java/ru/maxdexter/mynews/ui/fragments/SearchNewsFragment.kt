@@ -6,13 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ru.maxdexter.mynews.R
 import ru.maxdexter.mynews.db.ArticleDatabase
 import ru.maxdexter.mynews.repository.NewsRepository
 import ru.maxdexter.mynews.ui.viewmodels.SearchNewsViewModel
 import ru.maxdexter.mynews.ui.viewmodels.SearchNewsViewModelFactory
 
-class SearchNewsFragment: Fragment(R.layout.fragment_search_news) {
+class SearchNewsFragment: BottomSheetDialogFragment() {
 
     lateinit var viewModel: SearchNewsViewModel
     override fun onCreateView(
@@ -25,6 +26,6 @@ class SearchNewsFragment: Fragment(R.layout.fragment_search_news) {
         val repository = NewsRepository(ArticleDatabase.invoke(requireContext()))
         val viewModelFactory = SearchNewsViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(SearchNewsViewModel::class.java)
-        return super.onCreateView(inflater, container, savedInstanceState)
+        return inflater.inflate(R.layout.fragment_search_news,container, false)
     }
 }
