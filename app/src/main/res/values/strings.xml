@@ -6,4 +6,8 @@
     <string name="search">Поиск новостей</string>
     <string name="query">Ваш запрос...</string>
     <string name="tools">Настройки</string>
+    <string name="politic">Политика</string>
+    <string name="menu">Меню</string>
+    <string name="sport">Спорт</string>
+    <string name="finance">Экономика</string>
 </resources>

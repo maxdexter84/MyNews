@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_global_toolsBottomSheetFragment"
             app:destination="@id/toolsBottomSheetFragment" />
+        <action
+            android:id="@+id/action_global_bottomNavDrawerMenu"
+            app:destination="@id/bottomNavDrawerMenu" />
     </navigation>
     <fragment
         android:id="@+id/savedNewsFragment"
@@ -66,4 +69,8 @@
         android:id="@+id/toolsBottomSheetFragment"
         android:name="ru.maxdexter.mynews.ui.fragments.ToolsBottomSheetFragment"
         android:label="ToolsBottomSheetFragment" />
+    <dialog
+        android:id="@+id/bottomNavDrawerMenu"
+        android:name="ru.maxdexter.mynews.ui.fragments.BottomNavDrawerMenu"
+        android:label="BottomNavDrawerMenu" />
 </navigation>
