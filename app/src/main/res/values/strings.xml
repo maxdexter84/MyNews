@@ -5,4 +5,5 @@
     <string name="search_news">Поиск</string>
     <string name="search">Поиск новостей</string>
     <string name="query">Ваш запрос...</string>
+    <string name="tools">Настройки</string>
 </resources>

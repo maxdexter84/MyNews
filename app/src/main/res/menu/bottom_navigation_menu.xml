@@ -13,5 +13,9 @@
         android:id="@+id/searchNewsFragment"
         android:icon="@drawable/ic_baseline_search_24"
         android:title="@string/search_news" />
+    <item
+        android:id="@+id/toolsBottomSheetFragment"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="@string/tools"/>
 
 </menu>

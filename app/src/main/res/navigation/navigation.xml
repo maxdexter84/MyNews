@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_global_searchNewsFragment"
             app:destination="@id/searchNewsFragment" />
+        <action
+            android:id="@+id/action_global_toolsBottomSheetFragment"
+            app:destination="@id/toolsBottomSheetFragment" />
     </navigation>
     <fragment
         android:id="@+id/savedNewsFragment"
@@ -59,4 +62,8 @@
             android:id="@+id/action_searchNewsFragment_to_articleFragment"
             app:destination="@id/articleFragment" />
     </dialog>
+    <dialog
+        android:id="@+id/toolsBottomSheetFragment"
+        android:name="ru.maxdexter.mynews.ui.fragments.ToolsBottomSheetFragment"
+        android:label="ToolsBottomSheetFragment" />
 </navigation>
