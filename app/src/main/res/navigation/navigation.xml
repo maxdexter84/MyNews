@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation.xml"
+    app:startDestination="@id/breakingNewsFragment">
+
+
+    <navigation android:id="@+id/navigation"
+        app:startDestination="@id/newsActivity">
+        <activity
+            android:id="@+id/newsActivity"
+            android:name="ru.maxdexter.mynews.ui.NewsActivity"
+            android:label="activity_news"
+            tools:layout="@layout/activity_news" />
+        <action
+            android:id="@+id/action_global_savedNewsFragment"
+            app:destination="@id/savedNewsFragment" />
+        <action
+            android:id="@+id/action_global_breakingNewsFragment"
+            app:destination="@id/breakingNewsFragment" />
+        <action
+            android:id="@+id/action_global_searchNewsFragment"
+            app:destination="@id/searchNewsFragment" />
+        <action
+            android:id="@+id/action_global_toolsBottomSheetFragment"
+            app:destination="@id/toolsBottomSheetFragment" />
+        <action
+            android:id="@+id/action_global_bottomNavDrawerMenu"
+            app:destination="@id/bottomNavDrawerMenu" />
+    </navigation>
+    <fragment
+        android:id="@+id/savedNewsFragment"
+        android:name="ru.maxdexter.mynews.ui.fragments.SavedNewsFragment"
+        android:label="SavedNewsFragment" >
+        <action
+            android:id="@+id/action_savedNewsFragment_to_articleFragment"
+            app:destination="@id/articleFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/breakingNewsFragment"
+        android:name="ru.maxdexter.mynews.ui.fragments.BreakingNewsFragment"
+        android:label="BreakingNewsFragment" >
+        <action
+            android:id="@+id/action_breakingNewsFragment_to_articleFragment"
+            app:destination="@id/articleFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/articleFragment"
+        android:name="ru.maxdexter.mynews.ui.fragments.ArticleFragment"
+        android:label="ArticleFragment" >
+        <argument
+            android:name="article"
+            app:argType="ru.maxdexter.mynews.models.Article" />
+    </fragment>
+    <dialog
+        android:id="@+id/searchNewsFragment"
+        android:name="ru.maxdexter.mynews.ui.fragments.SearchNewsFragment"
+        android:label="SearchNewsFragment" >
+        <action
+            android:id="@+id/action_searchNewsFragment_to_articleFragment"
+            app:destination="@id/articleFragment" />
+    </dialog>
+    <dialog
+        android:id="@+id/toolsBottomSheetFragment"
+        android:name="ru.maxdexter.mynews.ui.fragments.ToolsBottomSheetFragment"
+        android:label="ToolsBottomSheetFragment" />
+    <dialog
+        android:id="@+id/bottomNavDrawerMenu"
+        android:name="ru.maxdexter.mynews.ui.fragments.BottomNavDrawerMenu"
+        android:label="BottomNavDrawerMenu" />
+</navigation>
