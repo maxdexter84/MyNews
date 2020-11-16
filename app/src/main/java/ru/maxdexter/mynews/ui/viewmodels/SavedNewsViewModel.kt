@@ -19,6 +19,12 @@ class SavedNewsViewModel(val repository: NewsRepository) : ViewModel() {
         }
     }
 
+    fun saveArticle(article: Article) {
+        viewModelScope.launch {
+            repository.saveArticle(article)
+        }
+    }
+
 
 
 
