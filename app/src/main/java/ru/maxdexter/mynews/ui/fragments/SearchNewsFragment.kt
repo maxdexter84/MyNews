@@ -11,6 +11,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -50,6 +51,14 @@ class SearchNewsFragment: BottomSheetDialogFragment() {
         setRecyclerView(view)
         initObserveData(view)
         queryListener()
+
+        newsAdapter.setOnClickListener {
+            findNavController().navigate(
+                SearchNewsFragmentDirections.actionSearchNewsFragmentToArticleFragment(
+                    it
+                )
+            )
+        }
 
         return view
     }

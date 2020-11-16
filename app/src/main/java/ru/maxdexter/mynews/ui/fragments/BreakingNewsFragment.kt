@@ -4,8 +4,10 @@ package ru.maxdexter.mynews.ui.fragments
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_breaking_news.*
@@ -14,6 +16,7 @@ import ru.maxdexter.mynews.Resource
 import ru.maxdexter.mynews.adapters.NewsAdapter
 import ru.maxdexter.mynews.db.ArticleDatabase
 import ru.maxdexter.mynews.repository.NewsRepository
+import ru.maxdexter.mynews.ui.fragments.BreakingNewsFragmentDirections.Companion.actionBreakingNewsFragmentToArticleFragment
 import ru.maxdexter.mynews.ui.viewmodels.BreakingNewsViewModel
 import ru.maxdexter.mynews.ui.viewmodels.BreakingNewsViewModelFactory
 
@@ -30,6 +33,9 @@ class BreakingNewsFragment: Fragment(R.layout.fragment_breaking_news) {
 
         setRecyclerView()
         initObserveData(view)
+        newsAdapter.setOnClickListener {
+            findNavController().navigate(actionBreakingNewsFragmentToArticleFragment(it))
+        }
 
     }
 

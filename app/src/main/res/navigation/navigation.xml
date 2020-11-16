@@ -56,7 +56,11 @@
     <fragment
         android:id="@+id/articleFragment"
         android:name="ru.maxdexter.mynews.ui.fragments.ArticleFragment"
-        android:label="ArticleFragment" />
+        android:label="ArticleFragment" >
+        <argument
+            android:name="article"
+            app:argType="ru.maxdexter.mynews.models.Article" />
+    </fragment>
     <dialog
         android:id="@+id/searchNewsFragment"
         android:name="ru.maxdexter.mynews.ui.fragments.SearchNewsFragment"
