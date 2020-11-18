@@ -20,6 +20,16 @@ class ToolsBottomSheetFragment: BottomSheetDialogFragment() {
     lateinit var viewModelFactory: ToolsViewModelFactory
     var isDarkTheme = false
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        isDarkTheme = AppPreferences(requireContext()).isDarkTheme
+        if (isDarkTheme) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+        super.onCreate(savedInstanceState)
+    }
+
 
 
     override fun onCreateView(
@@ -32,10 +42,11 @@ class ToolsBottomSheetFragment: BottomSheetDialogFragment() {
         val preferences = AppPreferences(requireActivity())
         viewModelFactory = ToolsViewModelFactory(preferences)
         viewModel = ViewModelProvider(this, viewModelFactory).get(ToolsViewModel::class.java)
-
+        binding.switchTheme.isChecked = isDarkTheme
         binding.switchTheme.setOnCheckedChangeListener { buttonView, isChecked ->
-            binding.switchTheme.isChecked = isDarkTheme
+
             viewModel.setTheme(isChecked)
+            requireActivity().recreate()
         }
 
         return binding.root

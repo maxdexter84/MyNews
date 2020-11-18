@@ -2,12 +2,12 @@ package ru.maxdexter.mynews.settings
 
 import android.app.Activity
 import android.content.Context
-import android.content.SharedPreferences
+import ru.maxdexter.mynews.App
 
 
-class AppPreferences(activity: Activity) {
+class AppPreferences(context: Context) {
 
-    val sharedPreferences = activity.getSharedPreferences("settings", Activity.MODE_PRIVATE)
+    val sharedPreferences = context.getSharedPreferences("settings", Activity.MODE_PRIVATE)
 
     //Сохранение настроек
     //Чтенеие настроек
