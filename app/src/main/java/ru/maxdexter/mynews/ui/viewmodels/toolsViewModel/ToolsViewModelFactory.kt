@@ -1,5 +1,6 @@
 package ru.maxdexter.mynews.ui.viewmodels.toolsViewModel
 
+import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import ru.maxdexter.mynews.settings.AppPreferences

@@ -2,6 +2,7 @@ package ru.maxdexter.mynews.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
@@ -10,6 +11,7 @@ import ru.maxdexter.mynews.R
 import ru.maxdexter.mynews.databinding.ActivityNewsBinding
 import ru.maxdexter.mynews.db.ArticleDatabase
 import ru.maxdexter.mynews.repository.NewsRepository
+import ru.maxdexter.mynews.settings.AppPreferences
 import ru.maxdexter.mynews.ui.viewmodels.NewsViewModel
 import ru.maxdexter.mynews.ui.viewmodels.NewsViewModelFactory
 
@@ -17,7 +19,7 @@ class NewsActivity : AppCompatActivity() {
 
     lateinit var viewModel: NewsViewModel
 
-
+    var isDarkTheme: Boolean = false
     lateinit var binding: ActivityNewsBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
