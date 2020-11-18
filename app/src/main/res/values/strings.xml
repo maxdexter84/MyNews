@@ -10,4 +10,5 @@
     <string name="menu">Меню</string>
     <string name="sport">Спорт</string>
     <string name="finance">Экономика</string>
+    <string name="app_settings_title">Настройки приложения</string>
 </resources>
