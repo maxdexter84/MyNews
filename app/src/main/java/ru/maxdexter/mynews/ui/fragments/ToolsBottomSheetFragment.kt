@@ -23,7 +23,7 @@ class ToolsBottomSheetFragment: BottomSheetDialogFragment() {
         val appPreferences = AppPreferences(requireContext())
         viewModelFactory = ToolsViewModelFactory(appPreferences)
         viewModel = ViewModelProvider(this, viewModelFactory).get(ToolsViewModel::class.java)
-
+    
 
 
         return inflater.inflate(R.layout.fragment_tools_bottom_sheet, container, false)

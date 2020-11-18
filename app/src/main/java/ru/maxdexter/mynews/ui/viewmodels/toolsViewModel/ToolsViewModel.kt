@@ -9,10 +9,6 @@ import ru.maxdexter.mynews.settings.AppPreferences
 
 class ToolsViewModel(private val preferences: AppPreferences) : ViewModel() {
 
-    fun changeTheme(isDarkTheme:Boolean) {
-        viewModelScope.launch {
-            preferences.updateTheme(isDarkTheme)
-        }
-    }
+
 
 }
