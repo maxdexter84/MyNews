@@ -15,8 +15,9 @@
     android:layout_height="wrap_content"
     android:padding="8dp">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivArticleImage"
+
         android:layout_width="160dp"
         android:layout_height="90dp"
         android:scaleType="centerCrop"

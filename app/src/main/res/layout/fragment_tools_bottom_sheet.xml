@@ -28,7 +28,6 @@
                 android:gravity="center"
                 android:text="@string/app_settings_title"
                 android:textSize="@dimen/big_text_size"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
