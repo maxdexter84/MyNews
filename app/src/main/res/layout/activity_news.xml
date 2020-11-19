@@ -38,6 +38,7 @@
             android:layout_height="56dp"
             android:layout_gravity="bottom"
             app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
+
             app:navigationIcon="@drawable/ic_baseline_menu_24"
             app:menu="@menu/bottom_navigation_menu"
             app:layout_constraintBottom_toBottomOf="parent"
