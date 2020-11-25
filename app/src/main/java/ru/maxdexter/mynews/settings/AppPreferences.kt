@@ -2,7 +2,6 @@ package ru.maxdexter.mynews.settings
 
 import android.app.Activity
 import android.content.Context
-import ru.maxdexter.mynews.App
 
 
 class AppPreferences(context: Context) {
