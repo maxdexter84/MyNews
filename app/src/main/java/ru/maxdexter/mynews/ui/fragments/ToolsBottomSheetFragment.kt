@@ -43,7 +43,7 @@ class ToolsBottomSheetFragment: BottomSheetDialogFragment() {
         viewModelFactory = ToolsViewModelFactory(preferences)
         viewModel = ViewModelProvider(this, viewModelFactory).get(ToolsViewModel::class.java)
         binding.switchTheme.isChecked = isDarkTheme
-        binding.switchTheme.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.switchTheme.setOnCheckedChangeListener { _, isChecked ->
 
             viewModel.setTheme(isChecked)
             requireActivity().recreate()
