@@ -4,10 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import ru.maxdexter.mynews.R
+import ru.maxdexter.mynews.adapters.NewsAdapter
+import ru.maxdexter.mynews.databinding.FragmentSavedNewsBinding
 import ru.maxdexter.mynews.db.ArticleDatabase
+import ru.maxdexter.mynews.models.Article
 import ru.maxdexter.mynews.repository.NewsRepository
 import ru.maxdexter.mynews.ui.viewmodels.SavedNewsViewModel
 import ru.maxdexter.mynews.ui.viewmodels.SavedNewsViewModelFactory
@@ -15,15 +24,68 @@ import ru.maxdexter.mynews.ui.viewmodels.SavedNewsViewModelFactory
 class SavedNewsFragment: Fragment(R.layout.fragment_saved_news) {
 
     lateinit var viewModel: SavedNewsViewModel
+    lateinit var binding: FragmentSavedNewsBinding
+    lateinit var newsAdapter: NewsAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_saved_news, container, false)
         val repository = NewsRepository(ArticleDatabase.invoke(requireContext()))
         val viewModelFactory = SavedNewsViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(SavedNewsViewModel::class.java)
-        return super.onCreateView(inflater, container, savedInstanceState)
+
+        initRecycler()
+        observeData()
+        initItemTouchHelper()
+        newsAdapter.setOnClickListener {
+            findNavController().navigate(SavedNewsFragmentDirections.actionSavedNewsFragmentToArticleFragment(it))
+        }
+
+        return binding.root
     }
+
+    private fun initItemTouchHelper() {
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback())
+        itemTouchHelper.attachToRecyclerView(binding.rvSavedNews)
+    }
+
+    private fun observeData() {
+        viewModel.savedArticle.observe(viewLifecycleOwner, {
+            if (it != null) {
+                newsAdapter.differ.submitList(it)
+            }
+        })
+    }
+
+    private fun initRecycler() {
+        newsAdapter = NewsAdapter()
+        binding.rvSavedNews.apply {
+            adapter = newsAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
+    }
+
+    private fun itemTouchHelperCallback(): ItemTouchHelper.SimpleCallback {
+        return object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN,ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                val article = newsAdapter.differ.currentList[position]
+                viewModel.deleteArticle(article)
+                Snackbar.make(binding.root,"Отменить удаление?", Snackbar.LENGTH_LONG).setAction("Да") {
+                    viewModel.saveArticle(article)
+                }.show()
+            }
+        }
+    }
+
 }

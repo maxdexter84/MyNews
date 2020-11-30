@@ -3,4 +3,8 @@
     <dimen name="medium_space_16dp">16dp</dimen>
     <dimen name="min_elevation_2dp">2dp</dimen>
     <dimen name="normal_text_size">16sp</dimen>
+    <dimen name="large_text_size">36sp</dimen>
+    <dimen name="big_text_size">24sp</dimen>
+    <dimen name="minimum_space_8dp">8dp</dimen>
+    <dimen name="max_elevation_8dp">8dp</dimen>
 </resources>
