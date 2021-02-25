@@ -21,7 +21,7 @@ interface NewsAPI {
 
     @GET("v2/everything")
     suspend fun searchingNews(@Query("q") searchQuery:String,
-                              @Query("country") countryCod:String ,
+                              @Query("language") countryCod:String ,
                               @Query("page") pageNumber: Int ,
                               @Query("pageSize") pageSize: Int = 20,
                               @Query("apiKey") apiKey:String = API_KEY,) : NewsResponse

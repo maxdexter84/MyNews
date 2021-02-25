@@ -3,21 +3,21 @@ package ru.maxdexter.mynews.ui.fragments
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.PagingSource
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.collect
 import ru.maxdexter.mynews.R
 import ru.maxdexter.mynews.data.api.RetrofitInstance
-import ru.maxdexter.mynews.models.Resource
 import ru.maxdexter.mynews.ui.adapters.NewsAdapter
 import ru.maxdexter.mynews.databinding.FragmentSearchNewsBinding
 import ru.maxdexter.mynews.data.db.ArticleDatabase
@@ -42,12 +42,11 @@ class SearchNewsFragment: BottomSheetDialogFragment() {
         val repository = NewsRepository(ArticleDatabase.invoke(requireContext()).getArticleDao(), RetrofitInstance.api)
         val viewModelFactory = SearchNewsViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(SearchNewsViewModel::class.java)
-        val view = binding.root
 
-        setRecyclerView(view)
-        initObserveData(view)
+        showProgressBar()
+        setRecyclerView()
         queryListener()
-        return view
+        return binding.root
     }
 
     private fun queryListener() {
@@ -67,30 +66,20 @@ class SearchNewsFragment: BottomSheetDialogFragment() {
     }
 
     fun searchDelay(s: Editable) {
-        scope.launch {
-            delay(500)
-            if (s.length > 2)
-                viewModel.getSearchingNews(s.toString(),"ru")
-        }
+        if (s.length > 2)
+            initObserveData(s.toString(),requireContext().resources.getString(R.string.country_code))
+            viewModel.getSearchingNews(s.toString(),"ru")
+
     }
 
 
-    private fun initObserveData(view: View) {
-        viewModel.searchNews.observe(viewLifecycleOwner, { response ->
-            when (response) {
-                is Resource.Success -> {
-                    hideProgressBar()
-                    newsAdapter.differ.submitList(response.data?.articles)
-                }
-                is Resource.Error -> {
-                    hideProgressBar()
-                    Log.e("ERROR", "${response.message}")
-                    Snackbar.make(view, "Ошибка загрузки данных!!", Snackbar.LENGTH_LONG).show()
-                }
-
-                is Resource.Loading -> showProgressBar()
+    private fun initObserveData(query: String, countryCode: String) {
+        hideProgressBar()
+        lifecycleScope.launch {
+            viewModel.getSearchingNews(query,getString(R.string.country_code)).collect {
+                newsAdapter.submitData(it)
             }
-        })
+        }
     }
 
 
@@ -102,9 +91,9 @@ class SearchNewsFragment: BottomSheetDialogFragment() {
     }
 
 
-    private fun setRecyclerView(view: View) {
+    private fun setRecyclerView() {
         newsAdapter = NewsAdapter()
-        val recycler = view.findViewById<RecyclerView>(R.id.rvSearchNews)
+        val recycler = binding.rvSearchNews
         recycler.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(requireContext())

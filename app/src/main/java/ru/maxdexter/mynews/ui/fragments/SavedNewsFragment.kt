@@ -7,11 +7,14 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 import ru.maxdexter.mynews.R
 import ru.maxdexter.mynews.data.api.RetrofitInstance
 import ru.maxdexter.mynews.ui.adapters.NewsAdapter
@@ -51,7 +54,10 @@ class SavedNewsFragment: Fragment(R.layout.fragment_saved_news) {
     private fun observeData() {
         viewModel.savedArticle.observe(viewLifecycleOwner, {
             if (it != null) {
-                newsAdapter.differ.submitList(it)
+                lifecycleScope.launch {
+                    newsAdapter.submitData(PagingData.from(it))
+                }
+
             }
         })
     }
@@ -76,10 +82,14 @@ class SavedNewsFragment: Fragment(R.layout.fragment_saved_news) {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.absoluteAdapterPosition
-                val article = newsAdapter.differ.currentList[position]
-                viewModel.deleteArticle(article)
+                val article = newsAdapter.peek(position)
+                if (article != null) {
+                    viewModel.deleteArticle(article)
+                }
                 Snackbar.make(binding.root,"Отменить удаление?", Snackbar.LENGTH_LONG).setAction("Да") {
-                    viewModel.saveArticle(article)
+                    if (article != null) {
+                        viewModel.saveArticle(article)
+                    }
                 }.show()
             }
         }
