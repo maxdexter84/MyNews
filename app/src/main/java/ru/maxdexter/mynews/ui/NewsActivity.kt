@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import ru.maxdexter.mynews.R
+import ru.maxdexter.mynews.data.api.RetrofitInstance
 import ru.maxdexter.mynews.databinding.ActivityNewsBinding
 import ru.maxdexter.mynews.data.db.ArticleDatabase
 import ru.maxdexter.mynews.repository.NewsRepository
@@ -31,7 +32,7 @@ class NewsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_news)
 
-        val repository = NewsRepository(ArticleDatabase.invoke(this))
+        val repository = NewsRepository(ArticleDatabase.invoke(this).getArticleDao(), RetrofitInstance.api)
         val viewModelFactory = NewsViewModelFactory(repository)
         viewModel = ViewModelProvider(this,viewModelFactory).get(NewsViewModel::class.java)
 

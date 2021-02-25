@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import ru.maxdexter.mynews.R
+import ru.maxdexter.mynews.data.api.RetrofitInstance
 import ru.maxdexter.mynews.models.Resource
 import ru.maxdexter.mynews.ui.adapters.NewsAdapter
 import ru.maxdexter.mynews.data.db.ArticleDatabase
@@ -38,7 +39,7 @@ class BreakingNewsFragment: Fragment(R.layout.fragment_breaking_news) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val repository = NewsRepository(ArticleDatabase.invoke(requireContext()))
+        val repository = NewsRepository(ArticleDatabase.invoke(requireContext()).getArticleDao(), RetrofitInstance.api)
         val viewModelFactory = BreakingNewsViewModelFactory(repository )
         viewModel = ViewModelProvider(this, viewModelFactory).get(BreakingNewsViewModel::class.java)
         setRecyclerView()

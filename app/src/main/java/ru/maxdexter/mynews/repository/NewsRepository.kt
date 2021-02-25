@@ -1,43 +1,46 @@
 package ru.maxdexter.mynews.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
-import retrofit2.Response
+import ru.maxdexter.mynews.data.api.NewsAPI
 import ru.maxdexter.mynews.data.api.RetrofitInstance
-import ru.maxdexter.mynews.data.db.ArticleDatabase
+import ru.maxdexter.mynews.data.db.ArticleDao
 import ru.maxdexter.mynews.models.Article
-import ru.maxdexter.mynews.models.NewsResponse
+import ru.maxdexter.mynews.ui.paging.BreakingNewsPagingSource
+import ru.maxdexter.mynews.ui.paging.SearchNewsPagingSource
+import ru.maxdexter.mynews.util.Constants.Companion.PAGE_SIZE
 
-class NewsRepository(val db: ArticleDatabase) {
+class NewsRepository(private val articleDao: ArticleDao, private val newsAPI: NewsAPI) : INewsRepository {
 
-
-    suspend fun getBreakingNews(countryCode: String, pageNumber: Int): Response<NewsResponse> =
-        withContext(Dispatchers.IO){
-            RetrofitInstance.api.getBreakingNews(countryCode, pageNumber)
-        }
-
-
-
-
-    suspend fun searchNews(query: String, pageNumber: Int): Response<NewsResponse> =
-        withContext(Dispatchers.IO){
-        RetrofitInstance.api.searchForNews(query, pageNumber)
+    override  fun getBreakingNews(countryCode: String, category: String): Flow<PagingData<Article>> {
+        return Pager(config = PagingConfig(pageSize = PAGE_SIZE, enablePlaceholders = false),
+            pagingSourceFactory = {BreakingNewsPagingSource(newsAPI,category,countryCode,)}).flow.flowOn(Dispatchers.IO)
     }
 
+    override  fun searchNews(query: String, countryCode: String): Flow<PagingData<Article>>{
+       return Pager(config = PagingConfig(pageSize = PAGE_SIZE,enablePlaceholders = false),
+            pagingSourceFactory = {SearchNewsPagingSource(newsAPI,countryCode,query)}).flow.flowOn(Dispatchers.IO)
+    }
 
-    suspend fun saveArticle(article: Article) {
+    override suspend fun saveArticle(article: Article) {
         withContext(Dispatchers.IO){
-            db.getArticleDao().insert(article)
+            articleDao.insert(article)
         }
     }
 
-    suspend fun deleteArticle(article: Article) {
+    override suspend fun deleteArticle(article: Article) {
         withContext(Dispatchers.IO){
-            db.getArticleDao().deleteArticle(article)
+            articleDao.deleteArticle(article)
         }
     }
 
-    fun getSavedArticle() = db.getArticleDao().getAllArticles()
+    override fun getSavedArticle() = articleDao.getAllArticles()
 
 
 }

@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import ru.maxdexter.mynews.R
+import ru.maxdexter.mynews.data.api.RetrofitInstance
 import ru.maxdexter.mynews.databinding.FragmentArticleBinding
 import ru.maxdexter.mynews.data.db.ArticleDatabase
 import ru.maxdexter.mynews.repository.NewsRepository
@@ -30,7 +31,7 @@ class ArticleFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_article,container, false)
         val args = arguments?.let { ArticleFragmentArgs.fromBundle(it) }
         val article = args?.article
-        val repository = NewsRepository(ArticleDatabase.invoke(requireContext()))
+        val repository = NewsRepository(ArticleDatabase.invoke(requireContext()).getArticleDao(), RetrofitInstance.api)
         initViewModel(repository)
         initWebView(args)
 

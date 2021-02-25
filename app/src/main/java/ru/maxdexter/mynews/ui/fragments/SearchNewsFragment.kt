@@ -16,6 +16,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.*
 import ru.maxdexter.mynews.R
+import ru.maxdexter.mynews.data.api.RetrofitInstance
 import ru.maxdexter.mynews.models.Resource
 import ru.maxdexter.mynews.ui.adapters.NewsAdapter
 import ru.maxdexter.mynews.databinding.FragmentSearchNewsBinding
@@ -38,7 +39,7 @@ class SearchNewsFragment: BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_search_news,container, false)
-        val repository = NewsRepository(ArticleDatabase.invoke(requireContext()))
+        val repository = NewsRepository(ArticleDatabase.invoke(requireContext()).getArticleDao(), RetrofitInstance.api)
         val viewModelFactory = SearchNewsViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(SearchNewsViewModel::class.java)
         val view = binding.root
@@ -69,7 +70,7 @@ class SearchNewsFragment: BottomSheetDialogFragment() {
         scope.launch {
             delay(500)
             if (s.length > 2)
-                viewModel.getSearchingNews(s.toString())
+                viewModel.getSearchingNews(s.toString(),"ru")
         }
     }
 

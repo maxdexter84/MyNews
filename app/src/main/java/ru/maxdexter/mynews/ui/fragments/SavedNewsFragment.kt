@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import ru.maxdexter.mynews.R
+import ru.maxdexter.mynews.data.api.RetrofitInstance
 import ru.maxdexter.mynews.ui.adapters.NewsAdapter
 import ru.maxdexter.mynews.databinding.FragmentSavedNewsBinding
 import ru.maxdexter.mynews.data.db.ArticleDatabase
@@ -32,17 +33,13 @@ class SavedNewsFragment: Fragment(R.layout.fragment_saved_news) {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_saved_news, container, false)
-        val repository = NewsRepository(ArticleDatabase.invoke(requireContext()))
+        val repository = NewsRepository(ArticleDatabase.invoke(requireContext()).getArticleDao(), RetrofitInstance.api)
         val viewModelFactory = SavedNewsViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(SavedNewsViewModel::class.java)
 
         initRecycler()
         observeData()
         initItemTouchHelper()
-//        newsAdapter.setOnClickListener {
-//            findNavController().navigate(SavedNewsFragmentDirections.actionSavedNewsFragmentToArticleFragment(it))
-//        }
-
         return binding.root
     }
 
