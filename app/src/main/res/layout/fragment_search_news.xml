@@ -29,6 +29,9 @@
             <EditText
                 android:id="@+id/etSearch"
                 style="@style/et_search"
+                android:imeOptions="actionSearch"
+                android:inputType="textNoSuggestions"
+                android:selectAllOnFocus="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -53,7 +56,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etSearchWrap" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
