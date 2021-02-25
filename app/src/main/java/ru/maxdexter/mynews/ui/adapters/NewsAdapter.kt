@@ -4,9 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
 import ru.maxdexter.mynews.NavigationDirections
 import ru.maxdexter.mynews.R
@@ -14,7 +16,7 @@ import ru.maxdexter.mynews.databinding.ItemArticlePreviewBinding
 import ru.maxdexter.mynews.models.Article
 import ru.maxdexter.mynews.ui.fragments.BreakingNewsFragmentDirections
 
-class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
+class NewsAdapter : PagingDataAdapter<Article,NewsAdapter.ArticleViewHolder>(diffCallback) {
 
    class ArticleViewHolder(val binding: ItemArticlePreviewBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(article: Article){
@@ -40,18 +42,6 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
 
     }
 
-    private val diffCallback = object : DiffUtil.ItemCallback<Article>(){
-        override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
-           return oldItem.url == newItem.url
-        }
-
-        override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
-          return  oldItem == newItem
-        }
-    }
-
-    val differ = AsyncListDiffer(this,diffCallback)
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -60,12 +50,23 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
-        val article = differ.currentList[position]
-        holder.bind(article)
+        val article = getItem(position)
+        if (article != null) {
+            holder.bind(article)
+        }
     }
 
-    override fun getItemCount(): Int {
-        return differ.currentList.size
+    companion object{
+        val diffCallback = object : DiffUtil.ItemCallback<Article>(){
+            override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
+                return oldItem.url == newItem.url
+            }
+
+            override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
+                return  oldItem == newItem
+            }
+        }
     }
+
 
 }
