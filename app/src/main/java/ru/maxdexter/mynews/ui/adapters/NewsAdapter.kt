@@ -49,11 +49,11 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): NewsAdapter.ArticleViewHolder {
+    ): ArticleViewHolder {
        return ArticleViewHolder.from(parent)
     }
 
-    override fun onBindViewHolder(holder: NewsAdapter.ArticleViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val article = differ.currentList[position]
         holder.bind(article)
         setOnClickListener {

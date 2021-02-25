@@ -36,7 +36,7 @@ class ToolsBottomSheetFragment: BottomSheetDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tools_bottom_sheet, container, false)
 
         val preferences = AppPreferences(requireActivity())
