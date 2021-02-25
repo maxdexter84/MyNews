@@ -39,9 +39,9 @@ class SavedNewsFragment: Fragment(R.layout.fragment_saved_news) {
         initRecycler()
         observeData()
         initItemTouchHelper()
-        newsAdapter.setOnClickListener {
-            findNavController().navigate(SavedNewsFragmentDirections.actionSavedNewsFragmentToArticleFragment(it))
-        }
+//        newsAdapter.setOnClickListener {
+//            findNavController().navigate(SavedNewsFragmentDirections.actionSavedNewsFragmentToArticleFragment(it))
+//        }
 
         return binding.root
     }
@@ -78,7 +78,7 @@ class SavedNewsFragment: Fragment(R.layout.fragment_saved_news) {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position = viewHolder.adapterPosition
+                val position = viewHolder.absoluteAdapterPosition
                 val article = newsAdapter.differ.currentList[position]
                 viewModel.deleteArticle(article)
                 Snackbar.make(binding.root,"Отменить удаление?", Snackbar.LENGTH_LONG).setAction("Да") {

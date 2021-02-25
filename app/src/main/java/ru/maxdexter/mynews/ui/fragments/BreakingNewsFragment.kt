@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import ru.maxdexter.mynews.R
@@ -18,7 +17,6 @@ import ru.maxdexter.mynews.ui.adapters.NewsAdapter
 import ru.maxdexter.mynews.data.db.ArticleDatabase
 import ru.maxdexter.mynews.databinding.FragmentBreakingNewsBinding
 import ru.maxdexter.mynews.repository.NewsRepository
-import ru.maxdexter.mynews.ui.fragments.BreakingNewsFragmentDirections.Companion.actionBreakingNewsFragmentToArticleFragment
 import ru.maxdexter.mynews.ui.viewmodels.breakingnewsviewmodel.BreakingNewsViewModel
 import ru.maxdexter.mynews.ui.viewmodels.breakingnewsviewmodel.BreakingNewsViewModelFactory
 
@@ -43,13 +41,8 @@ class BreakingNewsFragment: Fragment(R.layout.fragment_breaking_news) {
         val repository = NewsRepository(ArticleDatabase.invoke(requireContext()))
         val viewModelFactory = BreakingNewsViewModelFactory(repository )
         viewModel = ViewModelProvider(this, viewModelFactory).get(BreakingNewsViewModel::class.java)
-
-
         setRecyclerView()
         initObserveData(view)
-        newsAdapter.setOnClickListener {
-            findNavController().navigate(actionBreakingNewsFragmentToArticleFragment(it))
-        }
     }
 
     private fun initObserveData(view: View) {

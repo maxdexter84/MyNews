@@ -46,15 +46,6 @@ class SearchNewsFragment: BottomSheetDialogFragment() {
         setRecyclerView(view)
         initObserveData(view)
         queryListener()
-
-        newsAdapter.setOnClickListener {
-            findNavController().navigate(
-                SearchNewsFragmentDirections.actionSearchNewsFragmentToArticleFragment(
-                    it
-                )
-            )
-        }
-
         return view
     }
 
