@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingSource
@@ -25,7 +26,7 @@ import ru.maxdexter.mynews.repository.NewsRepository
 import ru.maxdexter.mynews.ui.viewmodels.seachnewsviewmodel.SearchNewsViewModel
 import ru.maxdexter.mynews.ui.viewmodels.seachnewsviewmodel.SearchNewsViewModelFactory
 
-class SearchNewsFragment: BottomSheetDialogFragment() {
+class SearchNewsFragment: Fragment() {
 
     private lateinit var viewModel: SearchNewsViewModel
     private lateinit var newsAdapter: NewsAdapter

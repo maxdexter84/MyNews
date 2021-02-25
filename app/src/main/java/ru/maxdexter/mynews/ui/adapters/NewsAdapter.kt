@@ -7,9 +7,12 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import ru.maxdexter.mynews.R
 import ru.maxdexter.mynews.databinding.ItemArticlePreviewBinding
 import ru.maxdexter.mynews.models.Article
 import ru.maxdexter.mynews.ui.fragments.BreakingNewsFragmentDirections
+import ru.maxdexter.mynews.ui.fragments.SavedNewsFragmentDirections
+import ru.maxdexter.mynews.ui.fragments.SearchNewsFragmentDirections
 
 class NewsAdapter : PagingDataAdapter<Article,NewsAdapter.ArticleViewHolder>(diffCallback) {
 
@@ -22,7 +25,11 @@ class NewsAdapter : PagingDataAdapter<Article,NewsAdapter.ArticleViewHolder>(dif
                 binding.tvDescription.text = article.description
                 binding.tvPublishedAt.text = article.publishedAt
                 binding.setClickListener {
-                    it.findNavController().navigate( BreakingNewsFragmentDirections.actionBreakingNewsFragmentToArticleFragment(article))
+                   when(it.findNavController().currentDestination?.id){
+                        R.id.breakingNewsFragment -> it.findNavController().navigate( BreakingNewsFragmentDirections.actionBreakingNewsFragmentToArticleFragment(article))
+                        R.id.savedNewsFragment -> it.findNavController().navigate( SavedNewsFragmentDirections.actionSavedNewsFragmentToArticleFragment(article))
+                        R.id.searchNewsFragment -> it.findNavController().navigate( SearchNewsFragmentDirections.actionSearchNewsFragmentToArticleFragment(article))
+                    }
                 }
 
             }
