@@ -1,7 +1,6 @@
 package ru.maxdexter.mynews.ui.viewmodels.breakingnewsviewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -13,19 +12,17 @@ import ru.maxdexter.mynews.models.Resource
 import ru.maxdexter.mynews.models.NewsResponse
 import ru.maxdexter.mynews.repository.INewsRepository
 
-class BreakingNewsViewModel (val repository: INewsRepository): ViewModel() {
+class BreakingNewsViewModel (private val repository: INewsRepository): ViewModel() {
     private var currentCountryCode: String? = null
     private var currentCategory: String? = null
     private var currentSearchResult: Flow<PagingData<Article>>? = null
-    private val _breakingNews = MutableLiveData<Resource<NewsResponse>>()
-            val breakingNews: LiveData<Resource<NewsResponse>>
-            get() = _breakingNews
+
 
     init {
         getBreakingNews("ru","general")
     }
 
-    private fun getBreakingNews(countryCode:String, category: String): Flow<PagingData<Article>>{
+     fun getBreakingNews(countryCode:String, category: String): Flow<PagingData<Article>>{
         val lastResult = currentSearchResult
         if (lastResult != null && currentCategory == category && currentCountryCode == countryCode){
             return lastResult

@@ -17,4 +17,7 @@
     <string name="published_at">PUBLISHED AT</string>
     <string name="description">DESCRIPTION</string>
     <string name="add_to_favorit">add to favorit</string>
+    <string name="country_code">ru</string>
+    <string name="news_category">general</string>
+    <string name="Load_result_error_text">Ошибка загрузки данных</string>
 </resources>

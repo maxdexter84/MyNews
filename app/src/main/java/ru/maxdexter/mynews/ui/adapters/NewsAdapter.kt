@@ -1,17 +1,12 @@
 package ru.maxdexter.mynews.ui.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
-import ru.maxdexter.mynews.NavigationDirections
-import ru.maxdexter.mynews.R
 import ru.maxdexter.mynews.databinding.ItemArticlePreviewBinding
 import ru.maxdexter.mynews.models.Article
 import ru.maxdexter.mynews.ui.fragments.BreakingNewsFragmentDirections
@@ -26,7 +21,6 @@ class NewsAdapter : PagingDataAdapter<Article,NewsAdapter.ArticleViewHolder>(dif
                 binding.tvTitle.text = article.title
                 binding.tvDescription.text = article.description
                 binding.tvPublishedAt.text = article.publishedAt
-
                 binding.setClickListener {
                     it.findNavController().navigate( BreakingNewsFragmentDirections.actionBreakingNewsFragmentToArticleFragment(article))
                 }
