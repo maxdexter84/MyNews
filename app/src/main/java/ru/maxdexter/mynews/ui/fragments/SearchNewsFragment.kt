@@ -46,7 +46,7 @@ class SearchNewsFragment: Fragment() {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_search_news,container, false)
         setRecyclerView()
         initSearch()
-        
+
         return binding.root
     }
 
@@ -78,7 +78,6 @@ class SearchNewsFragment: Fragment() {
     }
 
     private fun initSearch() {
-        showProgressBar()
         binding.etSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_GO) {
                 updateRepoListFromInput()
@@ -108,6 +107,7 @@ class SearchNewsFragment: Fragment() {
     }
 
     private fun updateRepoListFromInput() {
+        showProgressBar()
         binding.etSearch.text.trim().let {
             if (it.isNotEmpty()) {
                 binding.rvSearchNews.scrollToPosition(0)
