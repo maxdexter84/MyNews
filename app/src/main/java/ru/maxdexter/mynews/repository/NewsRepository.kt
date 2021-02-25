@@ -1,11 +1,10 @@
 package ru.maxdexter.mynews.repository
 
-import android.content.Context
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
-import ru.maxdexter.mynews.api.RetrofitInstance
-import ru.maxdexter.mynews.db.ArticleDatabase
+import ru.maxdexter.mynews.data.api.RetrofitInstance
+import ru.maxdexter.mynews.data.db.ArticleDatabase
 import ru.maxdexter.mynews.models.Article
 import ru.maxdexter.mynews.models.NewsResponse
 

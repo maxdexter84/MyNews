@@ -9,18 +9,18 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import ru.maxdexter.mynews.R
 import ru.maxdexter.mynews.databinding.ActivityNewsBinding
-import ru.maxdexter.mynews.db.ArticleDatabase
+import ru.maxdexter.mynews.data.db.ArticleDatabase
 import ru.maxdexter.mynews.repository.NewsRepository
 import ru.maxdexter.mynews.settings.AppPreferences
-import ru.maxdexter.mynews.ui.viewmodels.NewsViewModel
-import ru.maxdexter.mynews.ui.viewmodels.NewsViewModelFactory
+import ru.maxdexter.mynews.ui.viewmodels.newsviewmodel.NewsViewModel
+import ru.maxdexter.mynews.ui.viewmodels.newsviewmodel.NewsViewModelFactory
 
 class NewsActivity : AppCompatActivity() {
 
-    lateinit var viewModel: NewsViewModel
+    private lateinit var viewModel: NewsViewModel
+    private var isDarkTheme: Boolean = false
+    private lateinit var binding: ActivityNewsBinding
 
-    var isDarkTheme: Boolean = false
-    lateinit var binding: ActivityNewsBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         isDarkTheme = AppPreferences(this).isDarkTheme
         if (isDarkTheme) {
@@ -31,7 +31,7 @@ class NewsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_news)
 
-        val repository: NewsRepository = NewsRepository(ArticleDatabase.invoke(this))
+        val repository = NewsRepository(ArticleDatabase.invoke(this))
         val viewModelFactory = NewsViewModelFactory(repository)
         viewModel = ViewModelProvider(this,viewModelFactory).get(NewsViewModel::class.java)
 

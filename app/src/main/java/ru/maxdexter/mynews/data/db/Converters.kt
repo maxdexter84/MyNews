@@ -1,4 +1,4 @@
-package ru.maxdexter.mynews.db
+package ru.maxdexter.mynews.data.db
 
 import androidx.room.TypeConverter
 import ru.maxdexter.mynews.models.Source

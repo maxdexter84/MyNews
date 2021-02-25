@@ -26,6 +26,7 @@
             android:layout_marginBottom="@dimen/medium_space_16dp"
             android:src="@drawable/ic_favorite"
             app:fabSize="normal"
+            android:layout_gravity="bottom|end"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

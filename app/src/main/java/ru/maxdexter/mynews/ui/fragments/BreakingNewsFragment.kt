@@ -3,26 +3,41 @@ package ru.maxdexter.mynews.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_breaking_news.*
 import ru.maxdexter.mynews.R
-import ru.maxdexter.mynews.Resource
-import ru.maxdexter.mynews.adapters.NewsAdapter
-import ru.maxdexter.mynews.db.ArticleDatabase
+import ru.maxdexter.mynews.models.Resource
+import ru.maxdexter.mynews.ui.adapters.NewsAdapter
+import ru.maxdexter.mynews.data.db.ArticleDatabase
+import ru.maxdexter.mynews.databinding.FragmentBreakingNewsBinding
 import ru.maxdexter.mynews.repository.NewsRepository
 import ru.maxdexter.mynews.ui.fragments.BreakingNewsFragmentDirections.Companion.actionBreakingNewsFragmentToArticleFragment
-import ru.maxdexter.mynews.ui.viewmodels.BreakingNewsViewModel
-import ru.maxdexter.mynews.ui.viewmodels.BreakingNewsViewModelFactory
+import ru.maxdexter.mynews.ui.viewmodels.breakingnewsviewmodel.BreakingNewsViewModel
+import ru.maxdexter.mynews.ui.viewmodels.breakingnewsviewmodel.BreakingNewsViewModelFactory
 
 class BreakingNewsFragment: Fragment(R.layout.fragment_breaking_news) {
 
-    lateinit var viewModel: BreakingNewsViewModel
-    lateinit var newsAdapter: NewsAdapter
+    private lateinit var viewModel: BreakingNewsViewModel
+    private lateinit var newsAdapter: NewsAdapter
+    private lateinit var binding: FragmentBreakingNewsBinding
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_breaking_news,container, false)
+
+
+        return binding.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val repository = NewsRepository(ArticleDatabase.invoke(requireContext()))
@@ -35,7 +50,6 @@ class BreakingNewsFragment: Fragment(R.layout.fragment_breaking_news) {
         newsAdapter.setOnClickListener {
             findNavController().navigate(actionBreakingNewsFragmentToArticleFragment(it))
         }
-
     }
 
     private fun initObserveData(view: View) {
@@ -57,16 +71,16 @@ class BreakingNewsFragment: Fragment(R.layout.fragment_breaking_news) {
     }
 
     private fun hideProgressBar() {
-        paginationProgressBar.visibility = View.INVISIBLE
+        binding.paginationProgressBar.visibility = View.INVISIBLE
     }
     private fun showProgressBar() {
-        paginationProgressBar.visibility = View.VISIBLE
+        binding.paginationProgressBar.visibility = View.VISIBLE
     }
 
 
     private fun setRecyclerView() {
         newsAdapter = NewsAdapter()
-        rvBreakingNews.apply {
+        binding.rvBreakingNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }

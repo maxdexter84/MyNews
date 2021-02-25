@@ -1,4 +1,4 @@
-package ru.maxdexter.mynews.adapters
+package ru.maxdexter.mynews.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,25 +7,30 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.item_article_preview.view.*
 import ru.maxdexter.mynews.R
+import ru.maxdexter.mynews.databinding.ItemArticlePreviewBinding
 import ru.maxdexter.mynews.models.Article
 
 class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
-  inner class ArticleViewHolder(view: View): RecyclerView.ViewHolder(view) {
 
+   class ArticleViewHolder(val binding: ItemArticlePreviewBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(article: Article){
             itemView.apply {
-                Glide.with(this).load(article.urlToImage).into(ivArticleImage)
-                tvSource.text = article.source.name
-                tvTitle.text = article.title
-                tvDescription.text = article.description
-                tvPublishedAt.text = article.publishedAt
-                setOnClickListener {
-                    onItemClickListener?.invoke(article)
-                }
+                Glide.with(this).load(article.urlToImage).into(binding.ivArticleImage)
+                binding.tvSource.text = article.source.name
+                binding.tvTitle.text = article.title
+                binding.tvDescription.text = article.description
+                binding.tvPublishedAt.text = article.publishedAt
+
             }
         }
+
+      companion object{
+          fun from(parent: ViewGroup):ArticleViewHolder{
+              val layoutInflater = LayoutInflater.from(parent.context)
+              return  ArticleViewHolder(ItemArticlePreviewBinding.inflate(layoutInflater,parent,false))
+          }
+      }
 
     }
 
@@ -45,13 +50,15 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
         parent: ViewGroup,
         viewType: Int
     ): NewsAdapter.ArticleViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_article_preview,parent,false)
-       return ArticleViewHolder(view)
+       return ArticleViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: NewsAdapter.ArticleViewHolder, position: Int) {
         val article = differ.currentList[position]
         holder.bind(article)
+        setOnClickListener {
+            onItemClickListener?.invoke(article)
+        }
     }
 
     override fun getItemCount(): Int {

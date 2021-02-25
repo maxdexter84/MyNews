@@ -1,4 +1,4 @@
-package ru.maxdexter.mynews.extensions
+package ru.maxdexter.mynews.util.extensions
 
 import android.widget.ImageView
 import com.bumptech.glide.Glide

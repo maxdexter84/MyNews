@@ -1,4 +1,4 @@
-package ru.maxdexter.mynews.ui.viewmodels
+package ru.maxdexter.mynews.ui.viewmodels.articleviewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

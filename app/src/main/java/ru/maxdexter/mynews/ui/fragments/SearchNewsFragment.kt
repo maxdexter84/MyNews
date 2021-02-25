@@ -7,41 +7,36 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_breaking_news.*
-import kotlinx.android.synthetic.main.fragment_breaking_news.paginationProgressBar
-import kotlinx.android.synthetic.main.fragment_search_news.*
 import kotlinx.coroutines.*
 import ru.maxdexter.mynews.R
-import ru.maxdexter.mynews.Resource
-import ru.maxdexter.mynews.adapters.NewsAdapter
-import ru.maxdexter.mynews.databinding.ActivityNewsBinding
+import ru.maxdexter.mynews.models.Resource
+import ru.maxdexter.mynews.ui.adapters.NewsAdapter
 import ru.maxdexter.mynews.databinding.FragmentSearchNewsBinding
-import ru.maxdexter.mynews.db.ArticleDatabase
+import ru.maxdexter.mynews.data.db.ArticleDatabase
 import ru.maxdexter.mynews.repository.NewsRepository
-import ru.maxdexter.mynews.ui.viewmodels.SearchNewsViewModel
-import ru.maxdexter.mynews.ui.viewmodels.SearchNewsViewModelFactory
+import ru.maxdexter.mynews.ui.viewmodels.seachnewsviewmodel.SearchNewsViewModel
+import ru.maxdexter.mynews.ui.viewmodels.seachnewsviewmodel.SearchNewsViewModelFactory
 
 class SearchNewsFragment: BottomSheetDialogFragment() {
 
-    lateinit var viewModel: SearchNewsViewModel
-    lateinit var newsAdapter: NewsAdapter
-    lateinit var binding: FragmentSearchNewsBinding
+    private lateinit var viewModel: SearchNewsViewModel
+    private lateinit var newsAdapter: NewsAdapter
+    private lateinit var binding: FragmentSearchNewsBinding
     private val job = SupervisorJob()
     private val scope = CoroutineScope(job + Dispatchers.Main)
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_search_news,container, false)
         val repository = NewsRepository(ArticleDatabase.invoke(requireContext()))
         val viewModelFactory = SearchNewsViewModelFactory(repository)
@@ -108,10 +103,10 @@ class SearchNewsFragment: BottomSheetDialogFragment() {
 
 
     private fun hideProgressBar() {
-        paginationProgressBar.visibility = View.INVISIBLE
+        binding.paginationProgressBar.visibility = View.INVISIBLE
     }
     private fun showProgressBar() {
-        paginationProgressBar.visibility = View.VISIBLE
+        binding.paginationProgressBar.visibility = View.VISIBLE
     }
 
 

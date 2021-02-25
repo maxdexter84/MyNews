@@ -1,4 +1,4 @@
-package ru.maxdexter.mynews.api
+package ru.maxdexter.mynews.data.api
 
 import retrofit2.Response
 import retrofit2.http.GET

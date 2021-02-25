@@ -1,4 +1,4 @@
-package ru.maxdexter.mynews.db
+package ru.maxdexter.mynews.data.db
 
 import android.content.Context
 import androidx.room.Database

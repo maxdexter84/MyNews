@@ -15,10 +15,10 @@ import ru.maxdexter.mynews.ui.viewmodels.toolsViewModel.ToolsViewModel
 import ru.maxdexter.mynews.ui.viewmodels.toolsViewModel.ToolsViewModelFactory
 
 class ToolsBottomSheetFragment: BottomSheetDialogFragment() {
-    lateinit var binding: FragmentToolsBottomSheetBinding
-    lateinit var viewModel: ToolsViewModel
-    lateinit var viewModelFactory: ToolsViewModelFactory
-    var isDarkTheme = false
+   private lateinit var binding: FragmentToolsBottomSheetBinding
+   private lateinit var viewModel: ToolsViewModel
+   private lateinit var viewModelFactory: ToolsViewModelFactory
+   private var isDarkTheme = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         isDarkTheme = AppPreferences(requireContext()).isDarkTheme

@@ -1,4 +1,4 @@
-package ru.maxdexter.mynews.ui.viewmodels
+package ru.maxdexter.mynews.ui.viewmodels.breakingnewsviewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
 import retrofit2.Response
-import ru.maxdexter.mynews.Resource
+import ru.maxdexter.mynews.models.Resource
 import ru.maxdexter.mynews.models.NewsResponse
 import ru.maxdexter.mynews.repository.NewsRepository
 
@@ -15,7 +15,7 @@ class BreakingNewsViewModel (val repository: NewsRepository): ViewModel() {
     private val _breakingNews = MutableLiveData<Resource<NewsResponse>>()
             val breakingNews: LiveData<Resource<NewsResponse>>
             get() = _breakingNews
-    var breakingNewsPage = 1
+    private var breakingNewsPage = 1
 
     init {
         getBreakingNews("ru")
@@ -28,7 +28,7 @@ class BreakingNewsViewModel (val repository: NewsRepository): ViewModel() {
     }
 
 
-    private fun handleBreakingNews(response: Response<NewsResponse>) :Resource<NewsResponse> {
+    private fun handleBreakingNews(response: Response<NewsResponse>) : Resource<NewsResponse> {
         if (response.isSuccessful) {
             response.body()?.let {result ->
                 return Resource.Success(result)

@@ -1,4 +1,4 @@
-package ru.maxdexter.mynews.ui.viewmodels
+package ru.maxdexter.mynews.ui.viewmodels.savednewsviewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,7 +10,7 @@ import ru.maxdexter.mynews.repository.NewsRepository
 
 class SavedNewsViewModel(val repository: NewsRepository) : ViewModel() {
 
-   val savedArticle = repository.getSavedArticle()
+    val savedArticle = repository.getSavedArticle()
 
 
     fun deleteArticle(article: Article) {

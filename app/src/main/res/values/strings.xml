@@ -4,7 +4,7 @@
     <string name="fav_news">Избранное</string>
     <string name="search_news">Поиск</string>
     <string name="search">Поиск новостей</string>
-    <string name="query">Ваш запрос...</string>
+    <string name="query">Ваш запрос…</string>
     <string name="tools">Настройки</string>
     <string name="politic">Политика</string>
     <string name="menu">Меню</string>
@@ -12,4 +12,8 @@
     <string name="finance">Экономика</string>
     <string name="app_settings_title">Настройки приложения</string>
     <string name="night_mode_title">Ночной режим</string>
+    <string name="title">TITLE</string>
+    <string name="source">SOURCE</string>
+    <string name="published_at">PUBLISHED AT</string>
+    <string name="description">DESCRIPTION</string>
 </resources>

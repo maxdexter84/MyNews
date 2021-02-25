@@ -1,24 +1,21 @@
-package ru.maxdexter.mynews.ui.viewmodels
+package ru.maxdexter.mynews.ui.viewmodels.seachnewsviewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import retrofit2.Response
-import ru.maxdexter.mynews.Resource
+import ru.maxdexter.mynews.models.Resource
 import ru.maxdexter.mynews.models.NewsResponse
 import ru.maxdexter.mynews.repository.NewsRepository
 
 class SearchNewsViewModel(val repository: NewsRepository) : ViewModel() {
 
     private val _searchNews = MutableLiveData<Resource<NewsResponse>>()
-    val searchNews: LiveData<Resource<NewsResponse>>
-        get() = _searchNews
-    var searchNewsPage = 1
+            val searchNews: LiveData<Resource<NewsResponse>>
+            get() = _searchNews
+    private var searchNewsPage = 1
 
 
 

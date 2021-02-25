@@ -13,24 +13,24 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import ru.maxdexter.mynews.R
-import ru.maxdexter.mynews.adapters.NewsAdapter
+import ru.maxdexter.mynews.ui.adapters.NewsAdapter
 import ru.maxdexter.mynews.databinding.FragmentSavedNewsBinding
-import ru.maxdexter.mynews.db.ArticleDatabase
-import ru.maxdexter.mynews.models.Article
+import ru.maxdexter.mynews.data.db.ArticleDatabase
 import ru.maxdexter.mynews.repository.NewsRepository
-import ru.maxdexter.mynews.ui.viewmodels.SavedNewsViewModel
-import ru.maxdexter.mynews.ui.viewmodels.SavedNewsViewModelFactory
+import ru.maxdexter.mynews.ui.viewmodels.savednewsviewmodel.SavedNewsViewModel
+import ru.maxdexter.mynews.ui.viewmodels.savednewsviewmodel.SavedNewsViewModelFactory
 
 class SavedNewsFragment: Fragment(R.layout.fragment_saved_news) {
 
-    lateinit var viewModel: SavedNewsViewModel
-    lateinit var binding: FragmentSavedNewsBinding
-    lateinit var newsAdapter: NewsAdapter
+    private lateinit var viewModel: SavedNewsViewModel
+    private lateinit var binding: FragmentSavedNewsBinding
+    private lateinit var newsAdapter: NewsAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_saved_news, container, false)
         val repository = NewsRepository(ArticleDatabase.invoke(requireContext()))
         val viewModelFactory = SavedNewsViewModelFactory(repository)
