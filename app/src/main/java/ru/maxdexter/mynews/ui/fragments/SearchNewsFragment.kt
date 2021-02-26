@@ -26,6 +26,7 @@ import ru.maxdexter.mynews.repository.NewsRepository
 import ru.maxdexter.mynews.ui.adapters.loadstateadapter.NewsLoadStateAdapter
 import ru.maxdexter.mynews.ui.viewmodels.seachnewsviewmodel.SearchNewsViewModel
 import ru.maxdexter.mynews.ui.viewmodels.seachnewsviewmodel.SearchNewsViewModelFactory
+import ru.maxdexter.mynews.util.extensions.loadStateListener
 
 class SearchNewsFragment: Fragment() {
     private val repository: NewsRepository by lazy{
@@ -45,15 +46,21 @@ class SearchNewsFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_search_news,container, false)
-        setRecyclerView()
+        initRecyclerView()
         initSearch()
+        initBtnRetrySearch()
 
         return binding.root
     }
 
+    private fun initBtnRetrySearch() {
+        binding.btnRetrySearch.setOnClickListener {
+            newsAdapter.retry()
+        }
+    }
+
     private fun search(query: String, countryCode: String = "ru") {
         searchJob?.cancel()
-        hideProgressBar()
         searchJob = lifecycleScope.launch {
             viewModel.getSearchingNews(query,countryCode).collectLatest {
                 newsAdapter.submitData(it)
@@ -61,15 +68,9 @@ class SearchNewsFragment: Fragment() {
         }
     }
 
-    private fun hideProgressBar() {
-        binding.paginationProgressBar.visibility = View.INVISIBLE
-    }
-    private fun showProgressBar() {
-        binding.paginationProgressBar.visibility = View.VISIBLE
-    }
 
 
-    private fun setRecyclerView() {
+    private fun initRecyclerView() {
         binding.rvSearchNews.apply {
             adapter = newsAdapter.withLoadStateHeaderAndFooter(
                 header = NewsLoadStateAdapter { newsAdapter.retry() },
@@ -77,6 +78,7 @@ class SearchNewsFragment: Fragment() {
             )
             layoutManager = LinearLayoutManager(requireContext())
         }
+        newsAdapter.loadStateListener(binding,requireContext())
     }
 
     private fun initSearch() {
@@ -96,7 +98,6 @@ class SearchNewsFragment: Fragment() {
                 false
             }
         }
-
         // Прокрутит список вверх, когда он будет обновлен из сети
         lifecycleScope.launch {
             newsAdapter.loadStateFlow
@@ -109,7 +110,6 @@ class SearchNewsFragment: Fragment() {
     }
 
     private fun updateRepoListFromInput() {
-        showProgressBar()
         binding.etSearch.text.trim().let {
             if (it.isNotEmpty()) {
                 binding.rvSearchNews.scrollToPosition(0)

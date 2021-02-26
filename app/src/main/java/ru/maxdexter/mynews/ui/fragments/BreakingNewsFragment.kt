@@ -21,6 +21,7 @@ import ru.maxdexter.mynews.repository.NewsRepository
 import ru.maxdexter.mynews.ui.adapters.loadstateadapter.NewsLoadStateAdapter
 import ru.maxdexter.mynews.ui.viewmodels.breakingnewsviewmodel.BreakingNewsViewModel
 import ru.maxdexter.mynews.ui.viewmodels.breakingnewsviewmodel.BreakingNewsViewModelFactory
+import ru.maxdexter.mynews.util.extensions.loadStateListener
 
 class BreakingNewsFragment: Fragment(R.layout.fragment_breaking_news) {
 
@@ -40,32 +41,21 @@ class BreakingNewsFragment: Fragment(R.layout.fragment_breaking_news) {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_breaking_news,container,false)
 
-        setRecyclerView()
+        initRecyclerView()
         initObserveData()
         return binding.root
     }
 
-
     private fun initObserveData() {
-        showProgressBar()
         lifecycleScope.launch {
             viewModel.getBreakingNews(getString(R.string.country_code),getString(R.string.news_category)).collect {
-                hideProgressBar()
                 newsAdapter.submitData(it)
             }
         }
 
     }
 
-    private fun hideProgressBar() {
-        binding.paginationProgressBar.visibility = View.INVISIBLE
-    }
-    private fun showProgressBar() {
-        binding.paginationProgressBar.visibility = View.VISIBLE
-    }
-
-
-    private fun setRecyclerView() {
+    private fun initRecyclerView() {
         binding.rvBreakingNews.apply {
             adapter = newsAdapter.withLoadStateHeaderAndFooter(
                 header = NewsLoadStateAdapter { newsAdapter.retry() },
@@ -73,6 +63,7 @@ class BreakingNewsFragment: Fragment(R.layout.fragment_breaking_news) {
             )
             layoutManager = LinearLayoutManager(requireContext())
         }
+        newsAdapter.loadStateListener(binding,requireContext())
     }
 
 

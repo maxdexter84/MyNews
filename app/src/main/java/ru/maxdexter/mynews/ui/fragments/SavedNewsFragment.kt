@@ -20,14 +20,16 @@ import ru.maxdexter.mynews.ui.adapters.newsadapter.NewsAdapter
 import ru.maxdexter.mynews.databinding.FragmentSavedNewsBinding
 import ru.maxdexter.mynews.data.db.ArticleDatabase
 import ru.maxdexter.mynews.repository.NewsRepository
+import ru.maxdexter.mynews.ui.adapters.loadstateadapter.NewsLoadStateAdapter
 import ru.maxdexter.mynews.ui.viewmodels.savednewsviewmodel.SavedNewsViewModel
 import ru.maxdexter.mynews.ui.viewmodels.savednewsviewmodel.SavedNewsViewModelFactory
 
 class SavedNewsFragment: Fragment(R.layout.fragment_saved_news) {
-
     private lateinit var viewModel: SavedNewsViewModel
     private lateinit var binding: FragmentSavedNewsBinding
-    private lateinit var newsAdapter: NewsAdapter
+    private val newsAdapter: NewsAdapter by lazy {
+        NewsAdapter()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,7 +41,7 @@ class SavedNewsFragment: Fragment(R.layout.fragment_saved_news) {
         val viewModelFactory = SavedNewsViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(SavedNewsViewModel::class.java)
 
-        initRecycler()
+        initRecyclerView()
         observeData()
         initItemTouchHelper()
         return binding.root
@@ -61,10 +63,12 @@ class SavedNewsFragment: Fragment(R.layout.fragment_saved_news) {
         })
     }
 
-    private fun initRecycler() {
-        newsAdapter = NewsAdapter()
-        binding.rvSavedNews.apply {
-            adapter = newsAdapter
+    private fun initRecyclerView() {
+        binding.rvSavedNews .apply {
+            adapter = newsAdapter.withLoadStateHeaderAndFooter(
+                header = NewsLoadStateAdapter { newsAdapter.retry() },
+                footer = NewsLoadStateAdapter { newsAdapter.retry() }
+            )
             layoutManager = LinearLayoutManager(requireContext())
         }
     }
