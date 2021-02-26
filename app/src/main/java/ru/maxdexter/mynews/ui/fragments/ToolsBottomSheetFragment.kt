@@ -4,17 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ru.maxdexter.mynews.R
 import ru.maxdexter.mynews.databinding.FragmentToolsBottomSheetBinding
 import ru.maxdexter.mynews.settings.AppPreferences
 import ru.maxdexter.mynews.ui.viewmodels.toolsViewModel.ToolsViewModel
 import ru.maxdexter.mynews.ui.viewmodels.toolsViewModel.ToolsViewModelFactory
 
-class ToolsBottomSheetFragment: BottomSheetDialogFragment() {
+class ToolsBottomSheetFragment: Fragment(){
    private lateinit var binding: FragmentToolsBottomSheetBinding
    private lateinit var viewModel: ToolsViewModel
    private lateinit var viewModelFactory: ToolsViewModelFactory

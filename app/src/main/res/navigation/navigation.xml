@@ -20,14 +20,14 @@
             android:id="@+id/action_global_breakingNewsFragment"
             app:destination="@id/breakingNewsFragment" />
         <action
-            android:id="@+id/action_global_toolsBottomSheetFragment"
-            app:destination="@id/toolsBottomSheetFragment" />
-        <action
             android:id="@+id/action_global_bottomNavDrawerMenu"
             app:destination="@id/bottomNavDrawerMenu" />
         <action
             android:id="@+id/action_global_searchNewsFragment2"
             app:destination="@id/searchNewsFragment" />
+        <action
+            android:id="@+id/action_global_toolsBottomSheetFragment2"
+            app:destination="@id/toolsBottomSheetFragment" />
     </navigation>
     <fragment
         android:id="@+id/savedNewsFragment"
@@ -62,10 +62,6 @@
             app:argType="ru.maxdexter.mynews.models.Article" />
     </fragment>
     <dialog
-        android:id="@+id/toolsBottomSheetFragment"
-        android:name="ru.maxdexter.mynews.ui.fragments.ToolsBottomSheetFragment"
-        android:label="ToolsBottomSheetFragment" />
-    <dialog
         android:id="@+id/bottomNavDrawerMenu"
         android:name="ru.maxdexter.mynews.ui.fragments.BottomNavDrawerMenu"
         android:label="BottomNavDrawerMenu" />
@@ -77,4 +73,8 @@
             android:id="@+id/action_searchNewsFragment_to_articleFragment"
             app:destination="@id/articleFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/toolsBottomSheetFragment"
+        android:name="ru.maxdexter.mynews.ui.fragments.ToolsBottomSheetFragment"
+        android:label="ToolsBottomSheetFragment" />
 </navigation>

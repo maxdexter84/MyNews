@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MyNews</string>
-    <string name="breaking_news">Последние</string>
-    <string name="fav_news">Избранное</string>
+    <string name="breaking_news">Новости</string>
+    <string name="fav_news">Закладки</string>
     <string name="search_news">Поиск</string>
     <string name="search">Поиск новостей</string>
     <string name="query">Ваш запрос…</string>
