@@ -15,18 +15,18 @@ import ru.maxdexter.mynews.ui.viewmodels.toolsViewModel.ToolsViewModel
 import ru.maxdexter.mynews.ui.viewmodels.toolsViewModel.ToolsViewModelFactory
 
 class ToolsBottomSheetFragment: BottomSheetDialogFragment() {
-    lateinit var binding: FragmentToolsBottomSheetBinding
-    lateinit var viewModel: ToolsViewModel
-    lateinit var viewModelFactory: ToolsViewModelFactory
-    var isDarkTheme = false
+   private lateinit var binding: FragmentToolsBottomSheetBinding
+   private lateinit var viewModel: ToolsViewModel
+   private lateinit var viewModelFactory: ToolsViewModelFactory
+   private var isDarkTheme = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         isDarkTheme = AppPreferences(requireContext()).isDarkTheme
-        if (isDarkTheme) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        }
+//        if (isDarkTheme) {
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+//        } else {
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+//        }
         super.onCreate(savedInstanceState)
     }
 
@@ -36,19 +36,22 @@ class ToolsBottomSheetFragment: BottomSheetDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tools_bottom_sheet, container, false)
 
         val preferences = AppPreferences(requireActivity())
         viewModelFactory = ToolsViewModelFactory(preferences)
         viewModel = ViewModelProvider(this, viewModelFactory).get(ToolsViewModel::class.java)
+        setTheme()
+
+        return binding.root
+    }
+
+    private fun setTheme() {
         binding.switchTheme.isChecked = isDarkTheme
         binding.switchTheme.setOnCheckedChangeListener { _, isChecked ->
-
             viewModel.setTheme(isChecked)
             requireActivity().recreate()
         }
-
-        return binding.root
     }
 }

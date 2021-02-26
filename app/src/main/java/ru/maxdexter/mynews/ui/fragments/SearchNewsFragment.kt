@@ -1,132 +1,124 @@
 package ru.maxdexter.mynews.ui.fragments
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.addTextChangedListener
+import android.view.inputmethod.EditorInfo
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_breaking_news.*
-import kotlinx.android.synthetic.main.fragment_breaking_news.paginationProgressBar
-import kotlinx.android.synthetic.main.fragment_search_news.*
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.flow.filter
 import ru.maxdexter.mynews.R
-import ru.maxdexter.mynews.Resource
-import ru.maxdexter.mynews.adapters.NewsAdapter
-import ru.maxdexter.mynews.databinding.ActivityNewsBinding
+import ru.maxdexter.mynews.data.api.RetrofitInstance
+import ru.maxdexter.mynews.ui.adapters.NewsAdapter
 import ru.maxdexter.mynews.databinding.FragmentSearchNewsBinding
-import ru.maxdexter.mynews.db.ArticleDatabase
+import ru.maxdexter.mynews.data.db.ArticleDatabase
 import ru.maxdexter.mynews.repository.NewsRepository
-import ru.maxdexter.mynews.ui.viewmodels.SearchNewsViewModel
-import ru.maxdexter.mynews.ui.viewmodels.SearchNewsViewModelFactory
+import ru.maxdexter.mynews.ui.viewmodels.seachnewsviewmodel.SearchNewsViewModel
+import ru.maxdexter.mynews.ui.viewmodels.seachnewsviewmodel.SearchNewsViewModelFactory
 
-class SearchNewsFragment: BottomSheetDialogFragment() {
+class SearchNewsFragment: Fragment() {
+    private val repository: NewsRepository by lazy{
+        NewsRepository(ArticleDatabase.invoke(requireContext()).getArticleDao(), RetrofitInstance.api)
+    }
+    private val viewModel: SearchNewsViewModel by lazy {
+        ViewModelProvider(this, SearchNewsViewModelFactory(repository)).get(SearchNewsViewModel::class.java)
+    }
+    private lateinit var newsAdapter: NewsAdapter
+    private lateinit var binding: FragmentSearchNewsBinding
+    private var searchJob: Job? = null
 
-    lateinit var viewModel: SearchNewsViewModel
-    lateinit var newsAdapter: NewsAdapter
-    lateinit var binding: FragmentSearchNewsBinding
-    private val job = SupervisorJob()
-    private val scope = CoroutineScope(job + Dispatchers.Main)
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_search_news,container, false)
-        val repository = NewsRepository(ArticleDatabase.invoke(requireContext()))
-        val viewModelFactory = SearchNewsViewModelFactory(repository)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(SearchNewsViewModel::class.java)
-        val view = binding.root
+        setRecyclerView()
+        initSearch()
 
-        setRecyclerView(view)
-        initObserveData(view)
-        queryListener()
-
-        newsAdapter.setOnClickListener {
-            findNavController().navigate(
-                SearchNewsFragmentDirections.actionSearchNewsFragmentToArticleFragment(
-                    it
-                )
-            )
-        }
-
-        return view
+        return binding.root
     }
 
-    private fun queryListener() {
-
-        binding.etSearch.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                return
+    private fun search(query: String, countryCode: String) {
+        searchJob?.cancel()
+        hideProgressBar()
+        searchJob = lifecycleScope.launch {
+            viewModel.getSearchingNews(query,getString(R.string.country_code)).collectLatest {
+                newsAdapter.submitData(it)
             }
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                return
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-               s?.let { searchDelay(it) }
-            }
-        })
-    }
-
-    fun searchDelay(s: Editable) {
-        scope.launch {
-            delay(500)
-            if (s.length > 2)
-                viewModel.getSearchingNews(s.toString())
         }
     }
-
-
-    private fun initObserveData(view: View) {
-        viewModel.searchNews.observe(viewLifecycleOwner, { response ->
-            when (response) {
-                is Resource.Success -> {
-                    hideProgressBar()
-                    newsAdapter.differ.submitList(response.data?.articles)
-                }
-                is Resource.Error -> {
-                    hideProgressBar()
-                    Log.e("ERROR", "${response.message}")
-                    Snackbar.make(view, "Ошибка загрузки данных!!", Snackbar.LENGTH_LONG).show()
-                }
-
-                is Resource.Loading -> showProgressBar()
-            }
-        })
-    }
-
 
     private fun hideProgressBar() {
-        paginationProgressBar.visibility = View.INVISIBLE
+        binding.paginationProgressBar.visibility = View.INVISIBLE
     }
     private fun showProgressBar() {
-        paginationProgressBar.visibility = View.VISIBLE
+        binding.paginationProgressBar.visibility = View.VISIBLE
     }
 
 
-    private fun setRecyclerView(view: View) {
+    private fun setRecyclerView() {
         newsAdapter = NewsAdapter()
-        val recycler = view.findViewById<RecyclerView>(R.id.rvSearchNews)
+        val recycler = binding.rvSearchNews
         recycler.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
     }
 
+    private fun initSearch() {
+        binding.etSearch.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_GO) {
+                updateRepoListFromInput()
+                true
+            } else {
+                false
+            }
+        }
+        binding.etSearch.setOnKeyListener { _, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                updateRepoListFromInput()
+                true
+            } else {
+                false
+            }
+        }
+
+        // Прокрутит список вверх, когда он будет обновлен из сети
+        lifecycleScope.launch {
+            newsAdapter.loadStateFlow
+                // Излучает только при изменении состояния загрузки.
+                .distinctUntilChangedBy { it.refresh }
+                // Реагируйте только на те случаи, когда удаленное ОБНОВЛЕНИЕ завершается, то есть не загружается.
+                .filter { it.refresh is LoadState.NotLoading }
+                .collect { binding.rvSearchNews.scrollToPosition(0) }
+        }
+    }
+
+    private fun updateRepoListFromInput() {
+        showProgressBar()
+        binding.etSearch.text.trim().let {
+            if (it.isNotEmpty()) {
+                binding.rvSearchNews.scrollToPosition(0)
+                search(it.toString(),requireContext().resources.getString(R.string.country_code))
+            }
+        }
+    }
+
     override fun onStop() {
         super.onStop()
-        scope.cancel()
+        searchJob?.cancel()
     }
 
 }

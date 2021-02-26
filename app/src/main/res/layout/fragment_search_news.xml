@@ -10,6 +10,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingStart="@dimen/medium_space_16dp"
+        android:paddingEnd="@dimen/medium_space_16dp"
         android:minHeight="500dp">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -18,18 +20,19 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/medium_space_16dp"
             android:hint="@string/search"
-            android:theme="@style/TextInputLayout.search"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
             <EditText
                 android:id="@+id/etSearch"
                 style="@style/et_search"
+                android:imeOptions="actionSearch"
+                android:inputType="textNoSuggestions"
+                android:selectAllOnFocus="true"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/query" />
+                android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -52,7 +55,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etSearchWrap" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

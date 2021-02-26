@@ -1,4 +1,4 @@
-package ru.maxdexter.mynews.api
+package ru.maxdexter.mynews.data.api
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -6,7 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.maxdexter.mynews.util.Constants.Companion.BASE_URL
 
-class RetrofitInstance {
+class  RetrofitInstance {
     companion object{
         private val retrofit by lazy {
             //интерцептор для логирования запросов и ответов
