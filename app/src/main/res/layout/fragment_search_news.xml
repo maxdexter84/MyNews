@@ -21,7 +21,6 @@
             android:layout_marginTop="@dimen/medium_space_16dp"
             android:hint="@string/search"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:theme="@style/TextInputLayout.search"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"

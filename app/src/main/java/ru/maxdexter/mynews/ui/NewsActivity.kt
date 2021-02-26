@@ -19,15 +19,12 @@ import ru.maxdexter.mynews.ui.viewmodels.newsviewmodel.NewsViewModelFactory
 class NewsActivity : AppCompatActivity() {
 
     private lateinit var viewModel: NewsViewModel
-    private var isDarkTheme: Boolean = false
     private lateinit var binding: ActivityNewsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        isDarkTheme = AppPreferences(this).isDarkTheme
-        if (isDarkTheme) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        when(AppPreferences(this).isDarkTheme){
+            true -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            false -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_news)
