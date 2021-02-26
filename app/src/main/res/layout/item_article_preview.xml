@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
             name="clickListener"
             type="android.view.View.OnClickListener"/>
+        <variable
+            name="article"
+            type="ru.maxdexter.mynews.models.Article" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -26,6 +30,7 @@
                 android:id="@+id/ivArticleImage"
                 android:layout_width="160dp"
                 android:layout_height="90dp"
+                app:setImage="@{article.urlToImage}"
                 android:scaleType="centerCrop"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -35,8 +40,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/source"
-                android:textColor="@android:color/black"
+                android:text="@{article.source.name}"
+                tools:text="@string/source"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ivArticleImage" />
 
@@ -47,8 +52,8 @@
                 android:layout_marginStart="8dp"
                 android:ellipsize="end"
                 android:maxLines="3"
-                android:text="@string/title"
-                android:textColor="@android:color/black"
+                android:text="@{article.title}"
+                tools:text="@string/title"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintLeft_toRightOf="@+id/ivArticleImage"
@@ -63,8 +68,8 @@
                 android:layout_marginTop="16dp"
                 android:ellipsize="end"
                 android:maxLines="5"
-                android:text="@string/description"
-                android:textColor="@android:color/black"
+                android:text="@{article.description}"
+                tools:text="@string/description"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/ivArticleImage"
                 app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
@@ -74,8 +79,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@string/published_at"
-                android:textColor="@android:color/black"
+                android:text="@{article.publishedAt}"
+                tools:text="@string/published_at"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvSource" />
         </androidx.constraintlayout.widget.ConstraintLayout>

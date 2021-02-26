@@ -22,11 +22,6 @@ class ToolsBottomSheetFragment: BottomSheetDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         isDarkTheme = AppPreferences(requireContext()).isDarkTheme
-//        if (isDarkTheme) {
-//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-//        } else {
-//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-//        }
         super.onCreate(savedInstanceState)
     }
 
