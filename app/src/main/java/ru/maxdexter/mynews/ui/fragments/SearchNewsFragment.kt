@@ -19,10 +19,11 @@ import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.filter
 import ru.maxdexter.mynews.R
 import ru.maxdexter.mynews.data.api.RetrofitInstance
-import ru.maxdexter.mynews.ui.adapters.NewsAdapter
+import ru.maxdexter.mynews.ui.adapters.newsadapter.NewsAdapter
 import ru.maxdexter.mynews.databinding.FragmentSearchNewsBinding
 import ru.maxdexter.mynews.data.db.ArticleDatabase
 import ru.maxdexter.mynews.repository.NewsRepository
+import ru.maxdexter.mynews.ui.adapters.loadstateadapter.NewsLoadStateAdapter
 import ru.maxdexter.mynews.ui.viewmodels.seachnewsviewmodel.SearchNewsViewModel
 import ru.maxdexter.mynews.ui.viewmodels.seachnewsviewmodel.SearchNewsViewModelFactory
 
@@ -33,7 +34,7 @@ class SearchNewsFragment: Fragment() {
     private val viewModel: SearchNewsViewModel by lazy {
         ViewModelProvider(this, SearchNewsViewModelFactory(repository)).get(SearchNewsViewModel::class.java)
     }
-    private lateinit var newsAdapter: NewsAdapter
+    private val newsAdapter: NewsAdapter by lazy { NewsAdapter() }
     private lateinit var binding: FragmentSearchNewsBinding
     private var searchJob: Job? = null
 
@@ -50,11 +51,11 @@ class SearchNewsFragment: Fragment() {
         return binding.root
     }
 
-    private fun search(query: String, countryCode: String) {
+    private fun search(query: String, countryCode: String = "ru") {
         searchJob?.cancel()
         hideProgressBar()
         searchJob = lifecycleScope.launch {
-            viewModel.getSearchingNews(query,getString(R.string.country_code)).collectLatest {
+            viewModel.getSearchingNews(query,countryCode).collectLatest {
                 newsAdapter.submitData(it)
             }
         }
@@ -69,10 +70,11 @@ class SearchNewsFragment: Fragment() {
 
 
     private fun setRecyclerView() {
-        newsAdapter = NewsAdapter()
-        val recycler = binding.rvSearchNews
-        recycler.apply {
-            adapter = newsAdapter
+        binding.rvSearchNews.apply {
+            adapter = newsAdapter.withLoadStateHeaderAndFooter(
+                header = NewsLoadStateAdapter { newsAdapter.retry() },
+                footer = NewsLoadStateAdapter { newsAdapter.retry() }
+            )
             layoutManager = LinearLayoutManager(requireContext())
         }
     }

@@ -1,4 +1,4 @@
-package ru.maxdexter.mynews.ui.adapters
+package ru.maxdexter.mynews.ui.adapters.newsadapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -25,9 +25,10 @@ class ArticleViewHolder(val binding: ItemArticlePreviewBinding): RecyclerView.Vi
     }
 
     companion object{
-        fun from(parent: ViewGroup):ArticleViewHolder{
+        fun from(parent: ViewGroup): ArticleViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
-            return  ArticleViewHolder(ItemArticlePreviewBinding.inflate(layoutInflater,parent,false))
+            val binding = ItemArticlePreviewBinding.inflate(layoutInflater,parent,false)
+            return  ArticleViewHolder(binding)
         }
     }
 }

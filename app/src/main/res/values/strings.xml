@@ -20,4 +20,5 @@
     <string name="country_code">ru</string>
     <string name="news_category">general</string>
     <string name="Load_result_error_text">Ошибка загрузки данных</string>
+    <string name="retry">Retry</string>
 </resources>

@@ -9,17 +9,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.PagingSource
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import ru.maxdexter.mynews.R
 import ru.maxdexter.mynews.data.api.RetrofitInstance
-import ru.maxdexter.mynews.ui.adapters.NewsAdapter
+import ru.maxdexter.mynews.ui.adapters.newsadapter.NewsAdapter
 import ru.maxdexter.mynews.data.db.ArticleDatabase
 import ru.maxdexter.mynews.databinding.FragmentBreakingNewsBinding
 import ru.maxdexter.mynews.repository.NewsRepository
+import ru.maxdexter.mynews.ui.adapters.loadstateadapter.NewsLoadStateAdapter
 import ru.maxdexter.mynews.ui.viewmodels.breakingnewsviewmodel.BreakingNewsViewModel
 import ru.maxdexter.mynews.ui.viewmodels.breakingnewsviewmodel.BreakingNewsViewModelFactory
 
@@ -68,7 +67,10 @@ class BreakingNewsFragment: Fragment(R.layout.fragment_breaking_news) {
 
     private fun setRecyclerView() {
         binding.rvBreakingNews.apply {
-            adapter = newsAdapter
+            adapter = newsAdapter.withLoadStateHeaderAndFooter(
+                header = NewsLoadStateAdapter { newsAdapter.retry() },
+                footer = NewsLoadStateAdapter { newsAdapter.retry() }
+            )
             layoutManager = LinearLayoutManager(requireContext())
         }
     }

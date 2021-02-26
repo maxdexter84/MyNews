@@ -1,4 +1,4 @@
-package ru.maxdexter.mynews.ui.adapters
+package ru.maxdexter.mynews.ui.adapters.newsadapter
 
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import ru.maxdexter.mynews.models.Article
 
 
-class NewsAdapter : PagingDataAdapter<Article,ArticleViewHolder>(diffCallback) {
+class NewsAdapter : PagingDataAdapter<Article, ArticleViewHolder>(diffCallback) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
