@@ -33,6 +33,7 @@ class BreakingNewsFragment: Fragment(R.layout.fragment_breaking_news) {
     }
     private val newsAdapter: NewsAdapter by lazy { NewsAdapter() }
 
+
     private lateinit var binding: FragmentBreakingNewsBinding
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,13 +43,15 @@ class BreakingNewsFragment: Fragment(R.layout.fragment_breaking_news) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_breaking_news,container,false)
 
         initRecyclerView()
-        initObserveData()
+
+        arguments?.let { BreakingNewsFragmentArgs.fromBundle(it).category }?.let { initObserveData(it) }
+
         return binding.root
     }
 
-    private fun initObserveData() {
+    private fun initObserveData(category: String) {
         lifecycleScope.launch {
-            viewModel.getBreakingNews(getString(R.string.country_code),getString(R.string.news_category)).collect {
+            viewModel.getBreakingNews(getString(R.string.country_code),category).collect {
                 newsAdapter.submitData(it)
             }
         }

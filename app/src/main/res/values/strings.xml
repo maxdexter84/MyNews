@@ -21,4 +21,9 @@
     <string name="news_category">general</string>
     <string name="Load_result_error_text">Ошибка загрузки данных</string>
     <string name="retry">Retry</string>
+    <string name="general">Главное</string>
+    <string name="entertainment">Развлечения</string>
+    <string name="health">Здоровье</string>
+    <string name="science">Наука</string>
+    <string name="technology">Технологии</string>
 </resources>

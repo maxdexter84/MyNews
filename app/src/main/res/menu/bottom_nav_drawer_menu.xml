@@ -3,13 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 <group>
     <item
-        android:id="@+id/politic_news"
-        android:title="@string/politic"/>
+        android:id="@+id/general"
+        android:title="@string/general"/>
     <item
-        android:id="@+id/sport"
+        android:id="@+id/business"
+        android:title="@string/finance"/>
+    <item
+        android:id="@+id/sports"
         android:title="@string/sport"/>
     <item
-        android:id="@+id/finance"
-        android:title="@string/finance"/>
+        android:id="@+id/health"
+        android:title="@string/health"/>
+    <item
+        android:id="@+id/science"
+        android:title="@string/science"/>
+    <item
+        android:id="@+id/technology"
+        android:title="@string/technology"/>
+    <item
+        android:id="@+id/entertainment"
+        android:title="@string/entertainment"/>
 </group>
 </menu>
+
+
+
+
+

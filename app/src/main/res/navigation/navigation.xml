@@ -52,6 +52,10 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="category"
+            android:defaultValue="general"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/articleFragment"
@@ -64,7 +68,11 @@
     <dialog
         android:id="@+id/bottomNavDrawerMenu"
         android:name="ru.maxdexter.mynews.ui.fragments.BottomNavDrawerMenu"
-        android:label="BottomNavDrawerMenu" />
+        android:label="BottomNavDrawerMenu" >
+        <action
+            android:id="@+id/action_bottomNavDrawerMenu_to_breakingNewsFragment"
+            app:destination="@id/breakingNewsFragment" />
+    </dialog>
     <fragment
         android:id="@+id/searchNewsFragment"
         android:name="ru.maxdexter.mynews.ui.fragments.SearchNewsFragment"
