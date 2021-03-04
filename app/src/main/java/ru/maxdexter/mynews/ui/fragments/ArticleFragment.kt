@@ -1,13 +1,19 @@
 package ru.maxdexter.mynews.ui.fragments
 
+import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.webkit.WebSettingsCompat
+import androidx.webkit.WebViewFeature
 import ru.maxdexter.mynews.R
 import ru.maxdexter.mynews.data.api.RetrofitInstance
 import ru.maxdexter.mynews.databinding.FragmentArticleBinding
@@ -17,6 +23,7 @@ import ru.maxdexter.mynews.domain.repository.IRemoteSource
 import ru.maxdexter.mynews.data.repository.LocalSourceImpl
 import ru.maxdexter.mynews.data.repository.NewsRepository
 import ru.maxdexter.mynews.data.repository.RemoteSourceImpl
+import ru.maxdexter.mynews.settings.AppPreferences
 import ru.maxdexter.mynews.ui.viewmodels.articleviewmodel.ArticleViewModel
 import ru.maxdexter.mynews.ui.viewmodels.articleviewmodel.ArticleViewModelFactory
 
@@ -27,6 +34,7 @@ class ArticleFragment : Fragment() {
    private lateinit var viewModel: ArticleViewModel
    private lateinit var viewModelFactory: ArticleViewModelFactory
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -55,9 +63,15 @@ class ArticleFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(ArticleViewModel::class.java)
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
+    @SuppressLint("SetJavaScriptEnabled")
     private fun initWebView(args: ArticleFragmentArgs?) {
         val webView = binding.webView
         webView.webViewClient = WebViewClient()
+        webView.settings.javaScriptEnabled = true
+        if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK) && AppPreferences(requireContext()).isDarkTheme){
+            WebSettingsCompat.setForceDark(webView.settings, WebSettingsCompat.FORCE_DARK_ON)
+        }
         if (args != null) {
             webView.loadUrl(args.uiModel.url)
         }
