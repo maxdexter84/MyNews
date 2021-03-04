@@ -1,4 +1,4 @@
-package ru.maxdexter.mynews.repository
+package ru.maxdexter.mynews.data.repository
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import ru.maxdexter.mynews.data.api.NewsAPI
-import ru.maxdexter.mynews.data.mappers.ArticleToUIModel
+import ru.maxdexter.mynews.domain.mappers.ArticleToUIModel
 import ru.maxdexter.mynews.domain.models.Resource
 import ru.maxdexter.mynews.domain.repository.IRemoteSource
 

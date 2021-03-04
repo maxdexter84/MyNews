@@ -14,9 +14,9 @@ import ru.maxdexter.mynews.databinding.FragmentArticleBinding
 import ru.maxdexter.mynews.data.db.AppDatabase
 import ru.maxdexter.mynews.domain.repository.ILocalSource
 import ru.maxdexter.mynews.domain.repository.IRemoteSource
-import ru.maxdexter.mynews.repository.LocalSourceImpl
-import ru.maxdexter.mynews.repository.NewsRepository
-import ru.maxdexter.mynews.repository.RemoteSourceImpl
+import ru.maxdexter.mynews.data.repository.LocalSourceImpl
+import ru.maxdexter.mynews.data.repository.NewsRepository
+import ru.maxdexter.mynews.data.repository.RemoteSourceImpl
 import ru.maxdexter.mynews.ui.viewmodels.articleviewmodel.ArticleViewModel
 import ru.maxdexter.mynews.ui.viewmodels.articleviewmodel.ArticleViewModelFactory
 

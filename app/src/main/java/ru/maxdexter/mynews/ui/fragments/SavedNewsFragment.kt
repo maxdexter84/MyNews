@@ -19,12 +19,12 @@ import ru.maxdexter.mynews.data.api.RetrofitInstance
 import ru.maxdexter.mynews.ui.adapters.newsadapter.NewsAdapter
 import ru.maxdexter.mynews.databinding.FragmentSavedNewsBinding
 import ru.maxdexter.mynews.data.db.AppDatabase
-import ru.maxdexter.mynews.data.mappers.UIModelBookmark
+import ru.maxdexter.mynews.domain.mappers.UIModelBookmark
 import ru.maxdexter.mynews.domain.repository.ILocalSource
 import ru.maxdexter.mynews.domain.repository.IRemoteSource
-import ru.maxdexter.mynews.repository.LocalSourceImpl
-import ru.maxdexter.mynews.repository.NewsRepository
-import ru.maxdexter.mynews.repository.RemoteSourceImpl
+import ru.maxdexter.mynews.data.repository.LocalSourceImpl
+import ru.maxdexter.mynews.data.repository.NewsRepository
+import ru.maxdexter.mynews.data.repository.RemoteSourceImpl
 import ru.maxdexter.mynews.ui.adapters.loadstateadapter.NewsLoadStateAdapter
 import ru.maxdexter.mynews.ui.viewmodels.savednewsviewmodel.SavedNewsViewModel
 import ru.maxdexter.mynews.ui.viewmodels.savednewsviewmodel.SavedNewsViewModelFactory

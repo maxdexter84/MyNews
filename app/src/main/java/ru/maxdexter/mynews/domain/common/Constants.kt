@@ -1,4 +1,4 @@
-package ru.maxdexter.mynews.util
+package ru.maxdexter.mynews.domain.common
 
 class Constants{
     companion object{

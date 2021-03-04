@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import ru.maxdexter.mynews.domain.repository.INewsRepository
 import ru.maxdexter.mynews.ui.entity.UIModel
 import ru.maxdexter.mynews.ui.paging.SearchNewsPagingSource
-import ru.maxdexter.mynews.util.Constants
+import ru.maxdexter.mynews.domain.common.Constants
 
 class SearchNewsViewModel(val repository: INewsRepository) : ViewModel() {
     private var currentQuery: String? = null

@@ -1,4 +1,4 @@
-package ru.maxdexter.mynews.repository
+package ru.maxdexter.mynews.data.repository
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

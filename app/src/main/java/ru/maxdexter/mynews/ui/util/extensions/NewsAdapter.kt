@@ -1,16 +1,12 @@
-package ru.maxdexter.mynews.util.extensions
+package ru.maxdexter.mynews.ui.util.extensions
 
 import android.content.Context
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.isVisible
-import androidx.databinding.ViewDataBinding
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import ru.maxdexter.mynews.databinding.FragmentBreakingNewsBinding
-import ru.maxdexter.mynews.databinding.FragmentSavedNewsBinding
 import ru.maxdexter.mynews.databinding.FragmentSearchNewsBinding
-import ru.maxdexter.mynews.databinding.ItemArticlePreviewBinding
 import ru.maxdexter.mynews.ui.adapters.newsadapter.NewsAdapter
 
 fun<T> NewsAdapter.loadStateListener(binding:T,context: Context){

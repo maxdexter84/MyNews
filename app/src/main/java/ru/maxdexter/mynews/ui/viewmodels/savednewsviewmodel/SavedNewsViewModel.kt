@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import ru.maxdexter.mynews.data.entity.db.Bookmark
-import ru.maxdexter.mynews.data.mappers.UIModelBookmark
+import ru.maxdexter.mynews.domain.mappers.UIModelBookmark
 import ru.maxdexter.mynews.domain.repository.INewsRepository
 import ru.maxdexter.mynews.ui.entity.UIModel
 

@@ -1,4 +1,4 @@
-package ru.maxdexter.mynews.repository
+package ru.maxdexter.mynews.data.repository
 
 import kotlinx.coroutines.flow.Flow
 import ru.maxdexter.mynews.data.entity.db.Bookmark

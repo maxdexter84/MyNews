@@ -2,7 +2,7 @@ package ru.maxdexter.mynews.data.api
 
 import retrofit2.http.GET
 import retrofit2.http.Query
-import ru.maxdexter.mynews.util.Constants.Companion.API_KEY
+import ru.maxdexter.mynews.domain.common.Constants.Companion.API_KEY
 import ru.maxdexter.mynews.data.entity.api.NewsResponse
 
 interface NewsAPI {

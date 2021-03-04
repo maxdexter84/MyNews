@@ -24,13 +24,13 @@ import ru.maxdexter.mynews.databinding.FragmentSearchNewsBinding
 import ru.maxdexter.mynews.data.db.AppDatabase
 import ru.maxdexter.mynews.domain.repository.ILocalSource
 import ru.maxdexter.mynews.domain.repository.IRemoteSource
-import ru.maxdexter.mynews.repository.LocalSourceImpl
-import ru.maxdexter.mynews.repository.NewsRepository
-import ru.maxdexter.mynews.repository.RemoteSourceImpl
+import ru.maxdexter.mynews.data.repository.LocalSourceImpl
+import ru.maxdexter.mynews.data.repository.NewsRepository
+import ru.maxdexter.mynews.data.repository.RemoteSourceImpl
 import ru.maxdexter.mynews.ui.adapters.loadstateadapter.NewsLoadStateAdapter
 import ru.maxdexter.mynews.ui.viewmodels.seachnewsviewmodel.SearchNewsViewModel
 import ru.maxdexter.mynews.ui.viewmodels.seachnewsviewmodel.SearchNewsViewModelFactory
-import ru.maxdexter.mynews.util.extensions.loadStateListener
+import ru.maxdexter.mynews.ui.util.extensions.loadStateListener
 
 class SearchNewsFragment: Fragment() {
     private val repository: NewsRepository by lazy{

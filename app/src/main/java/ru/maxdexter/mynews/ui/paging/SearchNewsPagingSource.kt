@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.collect
 import ru.maxdexter.mynews.domain.models.Resource
 import ru.maxdexter.mynews.domain.repository.INewsRepository
 import ru.maxdexter.mynews.ui.entity.UIModel
-import ru.maxdexter.mynews.util.Constants
-import ru.maxdexter.mynews.util.Constants.Companion.START_PAGE
+import ru.maxdexter.mynews.domain.common.Constants
+import ru.maxdexter.mynews.domain.common.Constants.Companion.START_PAGE
 import java.io.IOException
 
 class SearchNewsPagingSource(

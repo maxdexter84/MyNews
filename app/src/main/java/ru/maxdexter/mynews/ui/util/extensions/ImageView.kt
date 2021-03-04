@@ -1,6 +1,5 @@
-package ru.maxdexter.mynews.util.extensions
+package ru.maxdexter.mynews.ui.util.extensions
 
-import android.media.Image
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy

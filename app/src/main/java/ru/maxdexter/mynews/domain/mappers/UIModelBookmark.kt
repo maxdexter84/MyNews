@@ -1,4 +1,4 @@
-package ru.maxdexter.mynews.data.mappers
+package ru.maxdexter.mynews.domain.mappers
 
 import ru.maxdexter.mynews.data.entity.db.Bookmark
 import ru.maxdexter.mynews.ui.entity.UIModel
