@@ -2,8 +2,7 @@ package ru.maxdexter.mynews.ui.viewmodels.newsviewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import ru.maxdexter.mynews.repository.INewsRepository
-import ru.maxdexter.mynews.repository.NewsRepository
+import ru.maxdexter.mynews.domain.repository.INewsRepository
 
 class NewsViewModelFactory(private val repository: INewsRepository) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")

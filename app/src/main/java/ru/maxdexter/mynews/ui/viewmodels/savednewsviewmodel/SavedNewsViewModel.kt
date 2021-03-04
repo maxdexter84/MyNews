@@ -4,25 +4,41 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import ru.maxdexter.mynews.models.Article
-import ru.maxdexter.mynews.repository.INewsRepository
-import ru.maxdexter.mynews.repository.NewsRepository
+import ru.maxdexter.mynews.data.entity.db.Bookmark
+import ru.maxdexter.mynews.data.mappers.UIModelBookmark
+import ru.maxdexter.mynews.domain.repository.INewsRepository
+import ru.maxdexter.mynews.ui.entity.UIModel
 
 class SavedNewsViewModel(val repository: INewsRepository) : ViewModel() {
 
-    val savedArticle = repository.getSavedArticle()
-
-
-    fun deleteArticle(article: Article) {
+    private val _savedBookmarks = MutableLiveData<List<UIModel>>(emptyList())
+        val savedBookmarks: LiveData<List<UIModel>>
+        get() = _savedBookmarks
+    
+    init {
+        loadBookmarks()
+    }
+    
+    private fun loadBookmarks(){
         viewModelScope.launch {
-            repository.deleteArticle(article)
+            repository.loadBookmark().collect { list ->
+               _savedBookmarks.value = list.map { UIModelBookmark().fromBookmarkToUIModel(it) }
+            }
+        }
+    }
+    
+
+    fun deleteBookmark(bookmark: Bookmark) {
+        viewModelScope.launch {
+            repository.deleteBookmark(bookmark)
         }
     }
 
-    fun saveArticle(article: Article) {
+    fun saveBookmark(bookmark: Bookmark) {
         viewModelScope.launch {
-            repository.saveArticle(article)
+            repository.saveBookmark(bookmark)
         }
     }
 

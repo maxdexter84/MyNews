@@ -21,8 +21,12 @@ import ru.maxdexter.mynews.R
 import ru.maxdexter.mynews.data.api.RetrofitInstance
 import ru.maxdexter.mynews.ui.adapters.newsadapter.NewsAdapter
 import ru.maxdexter.mynews.databinding.FragmentSearchNewsBinding
-import ru.maxdexter.mynews.data.db.ArticleDatabase
+import ru.maxdexter.mynews.data.db.AppDatabase
+import ru.maxdexter.mynews.domain.repository.ILocalSource
+import ru.maxdexter.mynews.domain.repository.IRemoteSource
+import ru.maxdexter.mynews.repository.LocalSourceImpl
 import ru.maxdexter.mynews.repository.NewsRepository
+import ru.maxdexter.mynews.repository.RemoteSourceImpl
 import ru.maxdexter.mynews.ui.adapters.loadstateadapter.NewsLoadStateAdapter
 import ru.maxdexter.mynews.ui.viewmodels.seachnewsviewmodel.SearchNewsViewModel
 import ru.maxdexter.mynews.ui.viewmodels.seachnewsviewmodel.SearchNewsViewModelFactory
@@ -30,7 +34,9 @@ import ru.maxdexter.mynews.util.extensions.loadStateListener
 
 class SearchNewsFragment: Fragment() {
     private val repository: NewsRepository by lazy{
-        NewsRepository(ArticleDatabase.invoke(requireContext()).getArticleDao(), RetrofitInstance.api)
+        val localSourceImpl: ILocalSource = LocalSourceImpl(AppDatabase.invoke(requireContext()).bookmarkDao())
+        val remoteSourceImpl: IRemoteSource = RemoteSourceImpl(RetrofitInstance.api)
+        NewsRepository(localSourceImpl, remoteSourceImpl)
     }
     private val viewModel: SearchNewsViewModel by lazy {
         ViewModelProvider(this, SearchNewsViewModelFactory(repository)).get(SearchNewsViewModel::class.java)

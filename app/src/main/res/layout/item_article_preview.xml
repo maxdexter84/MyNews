@@ -8,8 +8,8 @@
             name="clickListener"
             type="android.view.View.OnClickListener"/>
         <variable
-            name="article"
-            type="ru.maxdexter.mynews.models.Article" />
+            name="uiModel"
+            type="ru.maxdexter.mynews.ui.entity.UIModel" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -30,7 +30,7 @@
                 android:id="@+id/ivArticleImage"
                 android:layout_width="160dp"
                 android:layout_height="90dp"
-                app:setImage="@{article.urlToImage}"
+                app:setImage="@{uiModel.urlToImage}"
                 android:scaleType="centerCrop"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@{article.source.name}"
+                android:text="@{uiModel.sourceName}"
                 tools:text="@string/source"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ivArticleImage" />
@@ -52,7 +52,7 @@
                 android:layout_marginStart="8dp"
                 android:ellipsize="end"
                 android:maxLines="3"
-                android:text="@{article.title}"
+                android:text="@{uiModel.title}"
                 tools:text="@string/title"
                 android:textSize="15sp"
                 android:textStyle="bold"
@@ -68,7 +68,7 @@
                 android:layout_marginTop="16dp"
                 android:ellipsize="end"
                 android:maxLines="5"
-                android:text="@{article.description}"
+                android:text="@{uiModel.description}"
                 tools:text="@string/description"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/ivArticleImage"
@@ -79,7 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@{article.publishedAt}"
+                android:text="@{uiModel.publishedAt}"
                 tools:text="@string/published_at"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvSource" />

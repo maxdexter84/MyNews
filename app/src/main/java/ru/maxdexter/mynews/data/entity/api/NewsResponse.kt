@@ -1,4 +1,4 @@
-package ru.maxdexter.mynews.models
+package ru.maxdexter.mynews.data.entity.api
 
 data class NewsResponse(
     val articles: List<Article>,

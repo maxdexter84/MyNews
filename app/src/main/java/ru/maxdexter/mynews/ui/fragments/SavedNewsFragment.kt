@@ -18,8 +18,13 @@ import ru.maxdexter.mynews.R
 import ru.maxdexter.mynews.data.api.RetrofitInstance
 import ru.maxdexter.mynews.ui.adapters.newsadapter.NewsAdapter
 import ru.maxdexter.mynews.databinding.FragmentSavedNewsBinding
-import ru.maxdexter.mynews.data.db.ArticleDatabase
+import ru.maxdexter.mynews.data.db.AppDatabase
+import ru.maxdexter.mynews.data.mappers.UIModelBookmark
+import ru.maxdexter.mynews.domain.repository.ILocalSource
+import ru.maxdexter.mynews.domain.repository.IRemoteSource
+import ru.maxdexter.mynews.repository.LocalSourceImpl
 import ru.maxdexter.mynews.repository.NewsRepository
+import ru.maxdexter.mynews.repository.RemoteSourceImpl
 import ru.maxdexter.mynews.ui.adapters.loadstateadapter.NewsLoadStateAdapter
 import ru.maxdexter.mynews.ui.viewmodels.savednewsviewmodel.SavedNewsViewModel
 import ru.maxdexter.mynews.ui.viewmodels.savednewsviewmodel.SavedNewsViewModelFactory
@@ -37,7 +42,9 @@ class SavedNewsFragment: Fragment(R.layout.fragment_saved_news) {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_saved_news, container, false)
-        val repository = NewsRepository(ArticleDatabase.invoke(requireContext()).getArticleDao(), RetrofitInstance.api)
+        val localSourceImpl: ILocalSource = LocalSourceImpl(AppDatabase.invoke(requireContext()).bookmarkDao())
+        val remoteSourceImpl: IRemoteSource = RemoteSourceImpl(RetrofitInstance.api)
+        val repository = NewsRepository(localSourceImpl,remoteSourceImpl )
         val viewModelFactory = SavedNewsViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(SavedNewsViewModel::class.java)
 
@@ -53,7 +60,7 @@ class SavedNewsFragment: Fragment(R.layout.fragment_saved_news) {
     }
 
     private fun observeData() {
-        viewModel.savedArticle.observe(viewLifecycleOwner, {
+        viewModel.savedBookmarks.observe(viewLifecycleOwner, {
             if (it != null) {
                 lifecycleScope.launch {
                     newsAdapter.submitData(PagingData.from(it))
@@ -85,13 +92,13 @@ class SavedNewsFragment: Fragment(R.layout.fragment_saved_news) {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.absoluteAdapterPosition
-                val article = newsAdapter.peek(position)
-                if (article != null) {
-                    viewModel.deleteArticle(article)
+                val uiModel = newsAdapter.peek(position)
+                if (uiModel != null) {
+                    viewModel.deleteBookmark(UIModelBookmark().fromUIModelToUIBookmark(uiModel))
                 }
                 Snackbar.make(binding.root,"Отменить удаление?", Snackbar.LENGTH_LONG).setAction("Да") {
-                    if (article != null) {
-                        viewModel.saveArticle(article)
+                    if (uiModel != null) {
+                        viewModel.saveBookmark(UIModelBookmark().fromUIModelToUIBookmark(uiModel))
                     }
                 }.show()
             }

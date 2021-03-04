@@ -1,46 +1,44 @@
 package ru.maxdexter.mynews.repository
 
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.withContext
-import ru.maxdexter.mynews.data.api.NewsAPI
-import ru.maxdexter.mynews.data.api.RetrofitInstance
-import ru.maxdexter.mynews.data.db.ArticleDao
-import ru.maxdexter.mynews.models.Article
-import ru.maxdexter.mynews.ui.paging.BreakingNewsPagingSource
-import ru.maxdexter.mynews.ui.paging.SearchNewsPagingSource
-import ru.maxdexter.mynews.util.Constants.Companion.PAGE_SIZE
+import ru.maxdexter.mynews.data.entity.db.Bookmark
+import ru.maxdexter.mynews.domain.models.Resource
+import ru.maxdexter.mynews.domain.repository.ILocalSource
+import ru.maxdexter.mynews.domain.repository.INewsRepository
+import ru.maxdexter.mynews.domain.repository.IRemoteSource
 
-class NewsRepository(private val articleDao: ArticleDao, private val newsAPI: NewsAPI) : INewsRepository {
 
-    override  fun getBreakingNews(countryCode: String, category: String): Flow<PagingData<Article>> {
-        return Pager(config = PagingConfig(pageSize = PAGE_SIZE, enablePlaceholders = false),
-            pagingSourceFactory = {BreakingNewsPagingSource(newsAPI,category,countryCode,)}).flow.flowOn(Dispatchers.IO)
+class NewsRepository(private val localSource: ILocalSource, private val remoteSource: IRemoteSource) :
+    INewsRepository {
+    override suspend fun loadBreakingNews(
+        pageNumber: Int,
+        category: String,
+        pageSize: Int,
+        countryCod: String
+    ): Flow<Resource> {
+       return remoteSource.breakingNews(pageNumber, category, pageSize, countryCod)
     }
 
-    override  fun searchNews(query: String, countryCode: String): Flow<PagingData<Article>>{
-       return Pager(config = PagingConfig(pageSize = PAGE_SIZE,enablePlaceholders = false),
-            pagingSourceFactory = {SearchNewsPagingSource(newsAPI,countryCode,query)}).flow.flowOn(Dispatchers.IO)
+    override suspend fun loadSearchNews(
+        pageNumber: Int,
+        query: String,
+        pageSize: Int,
+        countryCod: String
+    ): Flow<Resource> {
+        return remoteSource.searchNews(pageNumber, query, pageSize, countryCod)
     }
 
-    override suspend fun saveArticle(article: Article) {
-        withContext(Dispatchers.IO){
-            articleDao.insert(article)
-        }
+    override suspend fun loadBookmark(): Flow<List<Bookmark>> {
+       return localSource.getAllBookmark()
     }
 
-    override suspend fun deleteArticle(article: Article) {
-        withContext(Dispatchers.IO){
-            articleDao.deleteArticle(article)
-        }
+    override suspend fun deleteBookmark(bookmark: Bookmark) {
+       localSource.deleteBookmark(bookmark)
     }
 
-    override fun getSavedArticle() = articleDao.getAllArticles()
+    override suspend fun saveBookmark(bookmark: Bookmark) {
+        localSource.saveBookmark(bookmark)
+    }
 
 
 }

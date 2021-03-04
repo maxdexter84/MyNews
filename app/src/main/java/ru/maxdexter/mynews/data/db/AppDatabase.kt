@@ -5,16 +5,16 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import ru.maxdexter.mynews.models.Article
+import ru.maxdexter.mynews.data.entity.db.Bookmark
 
-@Database(entities = [Article::class], version = 1)
+@Database(entities = [Bookmark::class], version = 1)
 @TypeConverters(Converters::class)
-abstract class ArticleDatabase : RoomDatabase() {
-    abstract fun getArticleDao(): ArticleDao
+abstract class AppDatabase : RoomDatabase() {
+    abstract fun bookmarkDao(): BookmarkDao
 
     companion object{
         @Volatile
-        private var instance: ArticleDatabase? = null
+        private var instance: AppDatabase? = null
         private val LOCK = Any()
 
         operator fun invoke(context: Context) = instance ?: synchronized(LOCK){
@@ -22,7 +22,7 @@ abstract class ArticleDatabase : RoomDatabase() {
         }
 
         private fun createDatabase(context: Context) = Room.databaseBuilder(context,
-            ArticleDatabase::class.java,
-            "article_db.db").build()
+            AppDatabase::class.java,
+            "app_db.db").build()
     }
 }

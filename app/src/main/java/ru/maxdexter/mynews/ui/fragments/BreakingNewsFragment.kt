@@ -15,9 +15,13 @@ import kotlinx.coroutines.launch
 import ru.maxdexter.mynews.R
 import ru.maxdexter.mynews.data.api.RetrofitInstance
 import ru.maxdexter.mynews.ui.adapters.newsadapter.NewsAdapter
-import ru.maxdexter.mynews.data.db.ArticleDatabase
+import ru.maxdexter.mynews.data.db.AppDatabase
 import ru.maxdexter.mynews.databinding.FragmentBreakingNewsBinding
+import ru.maxdexter.mynews.domain.repository.ILocalSource
+import ru.maxdexter.mynews.domain.repository.IRemoteSource
+import ru.maxdexter.mynews.repository.LocalSourceImpl
 import ru.maxdexter.mynews.repository.NewsRepository
+import ru.maxdexter.mynews.repository.RemoteSourceImpl
 import ru.maxdexter.mynews.ui.adapters.loadstateadapter.NewsLoadStateAdapter
 import ru.maxdexter.mynews.ui.viewmodels.breakingnewsviewmodel.BreakingNewsViewModel
 import ru.maxdexter.mynews.ui.viewmodels.breakingnewsviewmodel.BreakingNewsViewModelFactory
@@ -26,7 +30,9 @@ import ru.maxdexter.mynews.util.extensions.loadStateListener
 class BreakingNewsFragment: Fragment(R.layout.fragment_breaking_news) {
 
     private val repository: NewsRepository by lazy {
-        NewsRepository(ArticleDatabase.invoke(requireContext()).getArticleDao(), RetrofitInstance.api)
+        val localSourceImpl: ILocalSource = LocalSourceImpl(AppDatabase.invoke(requireContext()).bookmarkDao())
+        val remoteSourceImpl: IRemoteSource = RemoteSourceImpl(RetrofitInstance.api)
+        NewsRepository(localSourceImpl, remoteSourceImpl)
     }
     private val viewModel: BreakingNewsViewModel by lazy {
         ViewModelProvider(this, BreakingNewsViewModelFactory(repository )).get(BreakingNewsViewModel::class.java)
@@ -68,6 +74,8 @@ class BreakingNewsFragment: Fragment(R.layout.fragment_breaking_news) {
         }
         newsAdapter.loadStateListener(binding,requireContext())
     }
+
+
 
 
 }

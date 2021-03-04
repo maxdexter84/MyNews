@@ -1,12 +1,12 @@
 package ru.maxdexter.mynews.data.db
 
 import androidx.room.TypeConverter
-import ru.maxdexter.mynews.models.Source
+import ru.maxdexter.mynews.data.entity.api.Source
 
 class Converters {
 
     @TypeConverter
-    fun fromSource(source:Source): String {
+    fun fromSource(source: Source): String {
         return source.name
     }
 
