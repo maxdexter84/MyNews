@@ -37,6 +37,7 @@ class NewsActivity : AppCompatActivity() {
         ViewModelProvider(this,NewsViewModelFactory(repository)).get(NewsViewModel::class.java)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
+        //AppCompatDelegate.setDefaultNightMode( AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         when(AppPreferences(this).isDarkTheme){
             true -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             false -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)

@@ -13,7 +13,7 @@ import ru.maxdexter.mynews.settings.AppPreferences
 import ru.maxdexter.mynews.ui.viewmodels.toolsViewModel.ToolsViewModel
 import ru.maxdexter.mynews.ui.viewmodels.toolsViewModel.ToolsViewModelFactory
 
-class ToolsBottomSheetFragment: Fragment(){
+class SettingsFragment: Fragment(){
    private lateinit var binding: FragmentToolsBottomSheetBinding
    private lateinit var viewModel: ToolsViewModel
    private lateinit var viewModelFactory: ToolsViewModelFactory

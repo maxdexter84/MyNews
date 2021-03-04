@@ -83,6 +83,6 @@
     </fragment>
     <fragment
         android:id="@+id/toolsBottomSheetFragment"
-        android:name="ru.maxdexter.mynews.ui.fragments.ToolsBottomSheetFragment"
+        android:name="ru.maxdexter.mynews.ui.fragments.SettingsFragment"
         android:label="ToolsBottomSheetFragment" />
 </navigation>
