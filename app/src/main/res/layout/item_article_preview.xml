@@ -40,51 +40,36 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{uiModel.sourceName}"
+                android:layout_marginTop="@dimen/minimum_space_8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tvPublishedAt"
+                app:layout_constraintTop_toBottomOf="@+id/ivArticleImage"
                 tools:text="@string/source" />
 
             <TextView
                 android:id="@+id/tvTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/minimum_space_8dp"
                 android:ellipsize="end"
-                android:layout_marginStart="@dimen/minimum_space_8dp"
-                android:layout_marginTop="@dimen/minimum_space_8dp"
                 android:maxLines="5"
                 android:text="@{uiModel.title}"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/ivArticleImage"
-                app:layout_constraintLeft_toRightOf="@+id/ivArticleImage"
-                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivArticleImage"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="@string/title" />
-
-            <TextView
-                android:id="@+id/tvDescription"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="5"
-                android:layout_marginTop="@dimen/minimum_space_8dp"
-                android:text="@{uiModel.description}"
-                app:layout_constraintBottom_toTopOf="@+id/tvSource"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ivArticleImage"
-                tools:text="@string/description" />
 
             <TextView
                 android:id="@+id/tvPublishedAt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/minimum_space_8dp"
                 android:text="@{uiModel.publishedAt}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvDescription"
                 tools:text="@string/published_at" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

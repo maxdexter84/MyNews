@@ -6,7 +6,6 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import ru.maxdexter.mynews.R
 import ru.maxdexter.mynews.databinding.ItemArticlePreviewBinding
-import ru.maxdexter.mynews.data.entity.api.Article
 import ru.maxdexter.mynews.ui.entity.UIModel
 import ru.maxdexter.mynews.ui.fragments.BreakingNewsFragmentDirections
 import ru.maxdexter.mynews.ui.fragments.SavedNewsFragmentDirections

@@ -3,7 +3,6 @@ package ru.maxdexter.mynews.ui.adapters.newsadapter
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import ru.maxdexter.mynews.data.entity.api.Article
 import ru.maxdexter.mynews.ui.entity.UIModel
 
 
